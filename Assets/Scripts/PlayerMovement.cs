@@ -7,7 +7,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float speed = 2;
     private Rigidbody2D rig;
 
-    private void Awake()
+    void Awake()
     {
         rig = transform.GetComponent<Rigidbody2D>();
     }
@@ -27,22 +27,5 @@ public class PlayerMovement : MonoBehaviour
             ++x;
 
         rig.velocity = new Vector2(x, y) * speed;
-    }
-
-    private void OnTriggerEnter2D(Collider2D coll)
-    {
-        if (coll.gameObject.layer == 8)
-            Debug.Log("Entered Hole");
-    }
-
-    private void OnTriggerExit2D(Collider2D coll)
-    {
-        if (coll.gameObject.layer == 8)
-            Debug.Log("Exited Hole");
-    }
-
-    private void OnTriggerStay2D(Collider2D coll)
-    {
-        
     }
 }

@@ -38,15 +38,17 @@ public class LeaveHole : MonoBehaviour
 
         if (holeDelayTimer >= 0)
             holeDelayTimer -= Time.deltaTime;
+
         else if (!canSpawnHole)
             canSpawnHole = true;
     }
 
     private void leaveHole()
     {
-        float holeSize = transform.localScale.x;
-        holes[holeIndex].transform.localScale = new Vector3(1, 0.5f, 1) * holeSize;
-        holes[holeIndex].transform.position = transform.parent.position - new Vector3(0, 0.2f / holeSize, 0);
+        float slimeSize = transform.localScale.x;
+        holes[holeIndex].transform.localScale = new Vector3(1, 0.5f, 1) * slimeSize;
+        holes[holeIndex].transform.position = transform.parent.position - new Vector3(0, 0.2f * slimeSize, 0);
+
         holes[holeIndex].SetActive(true);
         holeIndex = ++holeIndex % holes.Count;
     }

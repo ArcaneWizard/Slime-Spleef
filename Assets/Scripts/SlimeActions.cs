@@ -24,15 +24,18 @@ public abstract class SlimeActions : MonoBehaviour
     }
     protected void throwBit(Vector3 location, float power)
     {
-        Vector3 throwDir = (location - transform.position).normalized;
-        throwDir = new Vector3(throwDir.x, throwDir.y, 0);
-        Vector3 force = power * (throwDir + new Vector3(0, 0, 1));
+        Vector3 throwDir = location - transform.position;
+        throwDir = new Vector3(throwDir.x, throwDir.y, 0).normalized + new Vector3(0, 0, -1);
+        Vector3 force = power * throwDir;
+
+        force = Quaternion.Euler(45, 0, 0) * force;
 
         Transform currPellet = pellets[pelletIndex];
         Rigidbody pelletRig = currPellet.GetComponent<Rigidbody>();
 
         pelletRig.velocity = Vector3.zero;
         currPellet.position = transform.position;
+        currPellet.gameObject.SetActive(true);
         pelletRig.AddForce(force);
 
         pelletIndex = ++pelletIndex % pellets.Count;

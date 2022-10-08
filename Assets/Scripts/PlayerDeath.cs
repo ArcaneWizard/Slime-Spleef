@@ -7,7 +7,7 @@ public class PlayerDeath : GeneralDeath
     public override void RegisterDeath()
     {
         base.RegisterDeath();
-        Debug.Log("Fell Into Hole");
+        Debug.Log("Fell Into Puddle");
         // End Screen
         // Join Game Screen
     }

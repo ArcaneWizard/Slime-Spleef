@@ -21,7 +21,7 @@ public abstract class GeneralDeath : MonoBehaviour
         UponDying?.Invoke();
     }
 
-    private void checkHoleLanding(Collider2D col)
+    private void checkPuddleLanding(Collider2D col)
     {
         if (IsDead)
             return;
@@ -32,11 +32,11 @@ public abstract class GeneralDeath : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D col)
     {
-        checkHoleLanding(col);
+        checkPuddleLanding(col);
     }
 
     void OnTriggerStay2D(Collider2D col)
     {
-        checkHoleLanding(col);
+        checkPuddleLanding(col);
     }
 }

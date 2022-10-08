@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SlimeActions : MonoBehaviour
+public abstract class SlimeActions : MonoBehaviour
 {
     [SerializeField] private Transform pellet;
     private List<Transform> pellets;
@@ -24,8 +24,9 @@ public class SlimeActions : MonoBehaviour
     }
     protected void throwBit(Vector3 location, float power)
     {
-        Vector3 slimeOffset = location - transform.position;
-        Vector3 force = (slimeOffset.normalized + new Vector3(0, 0, 1)) * power;
+        Vector3 throwDir = (location - transform.position).normalized;
+        throwDir = new Vector3(throwDir.x, throwDir.y, 0);
+        Vector3 force = power * (throwDir + new Vector3(0, 0, 1));
 
         Transform currPellet = pellets[pelletIndex];
         Rigidbody pelletRig = currPellet.GetComponent<Rigidbody>();

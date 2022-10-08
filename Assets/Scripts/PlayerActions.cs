@@ -4,9 +4,14 @@ using UnityEngine;
 
 public class PlayerActions : SlimeActions
 {
+    [SerializeField] Camera camera;
+
     void Update()
     {
         if (Input.GetMouseButtonUp(0))
-            throwBit(Input.mousePosition, 1.0f);
+        {
+            Vector3 worldMousePosition = camera.ScreenToWorldPoint(Input.mousePosition);
+            throwBit(worldMousePosition, 1.0f);
+        }
     }
 }

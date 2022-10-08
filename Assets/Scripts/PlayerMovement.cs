@@ -12,7 +12,7 @@ public class PlayerMovement : MonoBehaviour
         rig = transform.GetComponent<Rigidbody2D>();
     }
 
-    void FixedUpdate() 
+    void Update() 
     {
         int x = 0; 
         int y = 0;

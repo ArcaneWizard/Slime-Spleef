@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerActions : SlimeActions
+public class PlayerThrow : Throw
 {
     [SerializeField] Camera mainCamera;
     [SerializeField] float power;

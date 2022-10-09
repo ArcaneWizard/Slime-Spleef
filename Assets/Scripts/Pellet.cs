@@ -12,7 +12,7 @@ public class Pellet : MonoBehaviour
     private Rigidbody rig;
     private Vector3 rotationalChange;
     private Vector3 initPos;
-    private float epsilon;
+    private const float epsilon = 0.1f;
 
     private List<Transform> puddles;
     private int puddleIndex;
@@ -27,7 +27,6 @@ public class Pellet : MonoBehaviour
         canSpawnPellet = true;
         pelletDelayTimer = pelletDelayDuration;
         rotationalChange = new Vector3(0, 0, UnityEngine.Random.Range(-10, 10));
-        epsilon = 0.1f;
 
         puddles = new List<Transform>();
         for (int i = 0; i < transform.GetChild(0).childCount; i++)
@@ -77,14 +76,11 @@ public class Pellet : MonoBehaviour
 
     void FixedUpdate()
     {
-        Vector3 gravity = 4.9f*new Vector3(0, -0.707f, 0.707f);
-        rig.AddForce(gravity);
-        
+        rig.AddForce(Constants.WorldGravity);
     }
 
     private void leavePuddle()
     {
-        Debug.Log("Leaving puddle!");
         Transform newPuddle = puddles[puddleIndex];
         puddleIndex = ++puddleIndex % puddles.Count;
 

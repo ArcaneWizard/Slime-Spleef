@@ -4,14 +4,20 @@ using UnityEngine;
 
 public class LeavePuddle : MonoBehaviour
 {
-    private const float puddleDelayDuration = 0.1f;
-    
-    private bool canSpawnPuddle;
-    private float puddleDelayTimer;
-
     [SerializeField] private Transform puddle;
+    private BounceHandler bounceHandler;
+
+    private const float puddleDelayDuration = 0.25f;
+    private float puddleDelayTimer;
+    private bool canSpawnPuddle;
+
     private List<GameObject> puddles;
     private int puddleIndex = 0;
+
+    void Awake()
+    {
+        bounceHandler = transform.GetComponent<BounceHandler>();
+    }
 
     void Start()
     {
@@ -29,7 +35,7 @@ public class LeavePuddle : MonoBehaviour
 
     void LateUpdate()
     {
-        if (transform.localPosition.y <= 0.01f && canSpawnPuddle)
+        if (bounceHandler.IsGrounded && canSpawnPuddle)
         {
             canSpawnPuddle = false;
             puddleDelayTimer = puddleDelayDuration;
@@ -51,7 +57,7 @@ public class LeavePuddle : MonoBehaviour
 
         float slimeSize = transform.localScale.x;
         newPuddle.localScale = new Vector3(1, 0.5f, 1) * slimeSize * 3;
-        newPuddle.position = transform.parent.position - new Vector3(0, 0.2f * slimeSize, 0);
+        newPuddle.position = transform.parent.position + Constants.SlimeCenterOffsetFromSprite - new Vector3(0, 0.2f * slimeSize, 0);
         newPuddle.gameObject.SetActive(true);
 
         IEnumerator countdown = newPuddle.GetComponent<Puddles>().InitiateDisappearingCountdown(timer);

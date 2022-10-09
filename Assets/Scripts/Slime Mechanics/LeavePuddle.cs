@@ -6,6 +6,7 @@ public class LeavePuddle : MonoBehaviour
 {
     private Movement movement;
     private GeneralDeath generalDeath;
+    private Spawning spawning;
 
     [SerializeField] private Transform puddle;
     private List<GameObject> puddles;
@@ -20,13 +21,11 @@ public class LeavePuddle : MonoBehaviour
     {
         movement = transform.parent.GetComponent<Movement>();
         generalDeath = transform.parent.GetComponent<GeneralDeath>();
+        spawning = transform.parent.GetComponent<Spawning>();
     }
 
     void Start()
     {
-        canSpawnPuddle = true;
-        puddleDelayTimer = puddleDelayWhenBouncing;
-
         puddles = new List<GameObject>();
         for(int i = 0; i < 30; i++)
         {
@@ -34,12 +33,15 @@ public class LeavePuddle : MonoBehaviour
             puddleClone.SetActive(false);
             puddles.Add(puddleClone);
         }
+
+        spawning.OnNewSpawn += initializePuddleSystem;
+        initializePuddleSystem();
     }
 
     void LateUpdate()
     {
-        //if (generalDeath.IsDead)
-       //     return;
+        if (generalDeath.IsDead)
+            return;
 
         if (movement.IsGrounded && canSpawnPuddle)
         {
@@ -55,18 +57,24 @@ public class LeavePuddle : MonoBehaviour
             canSpawnPuddle = true;
     }
 
+    private void initializePuddleSystem()
+    {
+        canSpawnPuddle = true;
+        puddleDelayTimer = puddleDelayWhenBouncing;
+    }
+
     private void leavePuddle()
     {
         Transform newPuddle = puddles[puddleIndex].transform;
         puddleIndex = ++puddleIndex % puddles.Count;
-        float timer = 20f;
 
         float slimeSize = transform.localScale.x;
         newPuddle.localScale = new Vector3(1, 0.5f, 1) * slimeSize * 3;
         newPuddle.position = transform.parent.position + Constants.SlimeCenterOffsetFromSprite - new Vector3(0, 0.2f * slimeSize, 0);
         newPuddle.gameObject.SetActive(true);
 
-        IEnumerator countdown = newPuddle.GetComponent<Puddles>().InitiateDisappearingCountdown(timer);
+        float time = movement.IsSliding ? 2.8f : 20f;
+        IEnumerator countdown = newPuddle.GetComponent<Puddles>().InitiateDisappearingCountdown(time);
         StartCoroutine(countdown);
     }
 }

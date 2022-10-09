@@ -5,7 +5,6 @@ using UnityEngine;
 public class PlayerThrow : Throw
 {
     [SerializeField] Camera mainCamera;
-    [SerializeField] float power;
 
     void Update()
     {

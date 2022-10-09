@@ -9,13 +9,20 @@ public abstract class GeneralDeath : MonoBehaviour
     public bool IsDead { get; private set; }
 
     private Energy energy;
+    private Spawning spawning;
     private Transform body;
 
     void Awake()
     {
-        IsDead = false;
         energy = transform.GetComponent<Energy>();
+        spawning = transform.GetComponent<Spawning>();
         body = transform.GetChild(0);
+        IsDead = true;
+    }
+
+    void Start()
+    {
+        spawning.OnNewSpawn += EntityIsAlive;
     }
 
     void Update()
@@ -23,7 +30,7 @@ public abstract class GeneralDeath : MonoBehaviour
         if (IsDead)
             return;
 
-        if (energy.EnergyValue <= 0f)
+        if (energy.NormalizedValue <= 0f)
             RegisterDeath();
     }
 
@@ -32,6 +39,8 @@ public abstract class GeneralDeath : MonoBehaviour
         IsDead = true;
         UponDying?.Invoke();
     }
+
+    private void EntityIsAlive() => IsDead = false;
 
     private void checkPuddleLanding(Collider2D col)
     {
@@ -42,13 +51,6 @@ public abstract class GeneralDeath : MonoBehaviour
             RegisterDeath();
     }
 
-    void OnTriggerEnter2D(Collider2D col)
-    {
-        checkPuddleLanding(col);
-    }
-
-    void OnTriggerStay2D(Collider2D col)
-    {
-        checkPuddleLanding(col);
-    }
+    void OnTriggerEnter2D(Collider2D col) => checkPuddleLanding(col);
+    void OnTriggerStay2D(Collider2D col) => checkPuddleLanding(col);
 }

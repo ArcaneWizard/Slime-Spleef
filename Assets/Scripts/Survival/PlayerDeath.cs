@@ -4,11 +4,11 @@ using UnityEngine;
 
 public class PlayerDeath : GeneralDeath
 {
+    [SerializeField] private Animator deathScreenAnimator;
+
     public override void RegisterDeath()
     {
         base.RegisterDeath();
-
-        // End Screen
-        // Join Game Screen
+        deathScreenAnimator.gameObject.SetActive(true);
     }
 }

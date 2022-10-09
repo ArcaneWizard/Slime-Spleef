@@ -6,20 +6,21 @@ public class PlayerMovement : Movement
 {
     [SerializeField] private float speed = 2;
     private Rigidbody2D rig;
-    private GeneralDeath generalDeath;
 
     protected override void Awake()
     {
         base.Awake();
 
         rig = transform.GetComponent<Rigidbody2D>();
-        generalDeath = transform.GetComponent<GeneralDeath>();
     }
 
     protected override void Update() 
     {
-       if (generalDeath.IsDead)
-           return;
+        if (generalDeath.IsDead)
+        {
+            rig.velocity = Vector2.zero;
+            return;
+        }
 
         base.Update();
         IsSliding = Input.GetKey(KeyCode.LeftShift);

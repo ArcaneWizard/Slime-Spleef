@@ -4,11 +4,15 @@ using UnityEngine;
 
 public abstract class Throw : MonoBehaviour
 {
+    [SerializeField] private Transform centerOfSlime;
     [SerializeField] private Transform pellet;
+    protected GeneralDeath generalDeath;
+
     private List<Transform> pellets;
     private int pelletIndex;
 
-    protected GeneralDeath generalDeath;
+    protected const float power = 350;
+
 
     void Awake()
     {
@@ -33,14 +37,14 @@ public abstract class Throw : MonoBehaviour
     {
         Vector3 dir = location - transform.position;
         Vector3 dirOnPlane = Constants.WorldPlaneRotation * new Vector3(dir.x, dir.y, 0);
-        Vector3 throwDir = (dirOnPlane + new Vector3(0, 3.5f, -3.5f)).normalized;
+        Vector3 throwDir = (dirOnPlane + new Vector3(0, 2.5f, -2.5f)).normalized;
         Vector3 force = power * throwDir;
 
         Transform currPellet = pellets[pelletIndex];
         Pellet pellet = currPellet.GetComponent<Pellet>();
 
         currPellet.gameObject.SetActive(true);
-        pellet.ConfigureTrajectory(transform.position + Constants.SlimeCenterOffsetFromSprite, force);
+        pellet.ConfigureTrajectory(centerOfSlime.position, force);
 
         pelletIndex = ++pelletIndex % pellets.Count;
     }

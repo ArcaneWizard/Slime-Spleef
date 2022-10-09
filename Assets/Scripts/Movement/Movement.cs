@@ -5,6 +5,7 @@ using UnityEngine;
 public abstract class Movement : MonoBehaviour
 {
     private Animator animator;
+    protected GeneralDeath generalDeath;
 
     public bool IsGrounded { get; private set; }
     public bool IsSliding { get; protected set; }
@@ -12,7 +13,7 @@ public abstract class Movement : MonoBehaviour
     protected virtual void Awake()
     {
         animator = transform.GetChild(0).GetComponent<Animator>();
-        IsSliding = false;
+        generalDeath = transform.GetComponent<GeneralDeath>();
     }
 
     protected virtual void Update()

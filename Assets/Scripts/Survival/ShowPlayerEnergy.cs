@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class ShowPlayerEnergy : MonoBehaviour
 {
     [SerializeField] private Energy energy;
+    [SerializeField] private Spawning spawning;
     private Image image;
 
     private const float minPercentForBlue = 0.6f;
@@ -18,21 +19,24 @@ public class ShowPlayerEnergy : MonoBehaviour
 
     void Start()
     {
-        image.fillAmount = energy.NormalizedEnergyValue;
+        spawning.OnNewSpawn += initializeEnergyBar;
+        initializeEnergyBar();
     }
 
     void Update()
     {
-        image.fillAmount = energy.NormalizedEnergyValue;
+        image.fillAmount = energy.NormalizedValue;
         updateEnergyColor();
     }
 
+    private void initializeEnergyBar() => image.fillAmount = energy.NormalizedValue;
+
     private void updateEnergyColor()
     {
-        float blueValue = Mathf.Max(energy.NormalizedEnergyValue - minPercentForBlue, 0);
+        float blueValue = Mathf.Max(energy.NormalizedValue - minPercentForBlue, 0);
         int blue = (int)(255 * blueScale * blueValue);
 
-        float greenValue = energy.NormalizedEnergyValue * 255 / minPercentForBlue;
+        float greenValue = energy.NormalizedValue * 255 / minPercentForBlue;
         int green = (int) Mathf.Min(greenValue, 255);
 
         int red = 255 - green;

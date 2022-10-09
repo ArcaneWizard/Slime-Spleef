@@ -4,12 +4,8 @@ using UnityEngine;
 
 public class Pellet : MonoBehaviour
 {
-    private const float pelletDelayDuration = 0.1f;
-
-    private bool canSpawnPellet;
-    private float pelletDelayTimer;
-
     private Rigidbody rig;
+
     private Vector3 rotationalChange;
     private Vector3 initPos;
     private const float epsilon = 0.1f;
@@ -17,16 +13,11 @@ public class Pellet : MonoBehaviour
     private List<Transform> puddles;
     private int puddleIndex;
 
-    void Awake()
-    {
-        rig = transform.GetComponent<Rigidbody>();
-    }
+    void Awake() => rig = transform.GetComponent<Rigidbody>();
 
     void Start()
     {
-        canSpawnPellet = true;
-        pelletDelayTimer = pelletDelayDuration;
-        rotationalChange = new Vector3(0, 0, UnityEngine.Random.Range(-10, 10));
+        rotationalChange = new Vector3(0, 0, Random.Range(-10, 10));
 
         puddles = new List<Transform>();
         for (int i = 0; i < transform.GetChild(0).childCount; i++)
@@ -51,40 +42,29 @@ public class Pellet : MonoBehaviour
         transform.position = initPos;
         this.initPos = initPos;
         rig.AddForce(force);
-
-        canSpawnPellet = false;
-        pelletDelayTimer = pelletDelayDuration;
     }
 
     void Update()
     {
         transform.localEulerAngles += rotationalChange;
-
-        if (canSpawnPellet && Mathf.Abs((transform.position.y - initPos.y) - (transform.position.z - initPos.z)) < epsilon)
-        {
-            leavePuddle();
-            
-            gameObject.SetActive(false);
-        }
-
-        if (pelletDelayTimer >= 0)
-            pelletDelayTimer -= Time.deltaTime;
-
-        else if (!canSpawnPellet)
-            canSpawnPellet = true;
     }
 
     void FixedUpdate()
     {
         rig.AddForce(Constants.WorldGravity);
+
+        if (Mathf.Abs((transform.position.y - initPos.y) - (transform.position.z - initPos.z)) < epsilon &&
+                sqrDistance(initPos, transform.position) > 0.1f)
+        {
+            leavePuddle();
+            gameObject.SetActive(false);
+        }
     }
 
     private void leavePuddle()
     {
         Transform newPuddle = puddles[puddleIndex];
         puddleIndex = ++puddleIndex % puddles.Count;
-
-        float timer = 20f;
 
         float pelletSize = transform.localScale.x;
         newPuddle.localScale = new Vector3(4, 2, 4) * pelletSize;
@@ -94,8 +74,12 @@ public class Pellet : MonoBehaviour
 
         newPuddle.parent = null;
 
-        IEnumerator countdown = newPuddle.GetComponent<Puddles>().InitiateDisappearingCountdown(timer);
+        IEnumerator countdown = newPuddle.GetComponent<Puddles>().InitiateDisappearingCountdown(20f);
         StartCoroutine(countdown);
     }
+
+    // returns the square distance between 2 world positions
+    private float sqrDistance(Vector3 a, Vector3 b) 
+        => (b.x - a.x) * (b.x - a.x) + (b.y - a.y) * (b.y - a.y) + (b.z - a.z) * (b.z - a.z);
 
 }

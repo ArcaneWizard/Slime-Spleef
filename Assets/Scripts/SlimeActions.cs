@@ -33,7 +33,7 @@ public abstract class SlimeActions : MonoBehaviour
         Pellet pellet = currPellet.GetComponent<Pellet>();
 
         currPellet.gameObject.SetActive(true);
-        pellet.ConfigureTrajectory(dirOnPlane.normalized, power, transform.position, force);
+        pellet.ConfigureTrajectory(transform.position, force);
 
         pelletIndex = ++pelletIndex % pellets.Count;
     }

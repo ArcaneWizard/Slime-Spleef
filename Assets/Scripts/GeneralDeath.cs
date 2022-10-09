@@ -6,7 +6,7 @@ using UnityEngine;
 public abstract class GeneralDeath : MonoBehaviour
 {
     public event Action UponDying;
-    public bool IsDead;
+    public bool IsDead { get; private set; }
     private Transform body;
 
     void Awake()

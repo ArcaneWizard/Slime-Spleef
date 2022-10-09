@@ -14,7 +14,8 @@ public class Pellet : MonoBehaviour
     private Vector3 initPos;
     private float epsilon;
 
-    private Vector2 distanceRange = new Vector2(4, 5);
+    private List<Transform> puddles;
+    private int puddleIndex;
 
     void Awake()
     {
@@ -27,9 +28,25 @@ public class Pellet : MonoBehaviour
         pelletDelayTimer = pelletDelayDuration;
         rotationalChange = new Vector3(0, 0, UnityEngine.Random.Range(-10, 10));
         epsilon = 0.1f;
+
+        puddles = new List<Transform>();
+        for (int i = 0; i < transform.GetChild(0).childCount; i++)
+        {
+            GameObject child = transform.GetChild(0).GetChild(i).gameObject;
+            child.SetActive(false);
+
+            GameObject puddleClone = Instantiate(child, transform.GetChild(0).position, Quaternion.identity, null);
+            float pelletSize = transform.localScale.x;
+            puddleClone.transform.localScale = new Vector3(4, 2, 4) * pelletSize;
+
+            puddleClone.SetActive(false);
+
+            puddles.Add(puddleClone.transform);
+        }
+        puddleIndex = 0;
     }
 
-    public void ConfigureTrajectory(Vector3 dirOnPlane, float power, Vector3 initPos, Vector3 force)
+    public void ConfigureTrajectory(Vector3 initPos, Vector3 force)
     {
         rig.velocity = Vector3.zero;
         transform.position = initPos;
@@ -46,7 +63,7 @@ public class Pellet : MonoBehaviour
 
         if (canSpawnPellet && Mathf.Abs((transform.position.y - initPos.y) - (transform.position.z - initPos.z)) < epsilon)
         {
-            // spawn hole
+            leavePuddle();
             
             gameObject.SetActive(false);
         }
@@ -64,4 +81,25 @@ public class Pellet : MonoBehaviour
         rig.AddForce(gravity);
         
     }
+
+    private void leavePuddle()
+    {
+        Debug.Log("Leaving puddle!");
+        Transform newPuddle = puddles[puddleIndex];
+        puddleIndex = ++puddleIndex % puddles.Count;
+
+        float timer = 20f;
+
+        float pelletSize = transform.localScale.x;
+        newPuddle.localScale = new Vector3(4, 2, 4) * pelletSize;
+        newPuddle.position = transform.GetChild(0).position - new Vector3(0, 0.2f * pelletSize, 0);
+        newPuddle.eulerAngles = new Vector3(0, 0, 0);
+        newPuddle.gameObject.SetActive(true);
+
+        newPuddle.parent = null;
+
+        IEnumerator countdown = newPuddle.GetComponent<Puddles>().InitiateDisappearingCountdown(timer);
+        StartCoroutine(countdown);
+    }
+
 }

@@ -6,8 +6,14 @@ public abstract class Throw : MonoBehaviour
 {
     [SerializeField] private Transform pellet;
     private List<Transform> pellets;
-
     private int pelletIndex;
+
+    protected GeneralDeath generalDeath;
+
+    void Awake()
+    {
+        generalDeath = transform.parent.GetComponent<GeneralDeath>();
+    }
 
     void Start()
     {

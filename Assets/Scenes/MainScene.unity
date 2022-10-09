@@ -509,12 +509,10 @@ GameObject:
   - component: {fileID: 1253615042}
   - component: {fileID: 1253615041}
   - component: {fileID: 1253615044}
-  - component: {fileID: 1253615046}
   - component: {fileID: 1253615045}
   - component: {fileID: 1253615043}
-  - component: {fileID: 1253615047}
   m_Layer: 0
-  m_Name: Slime Sprite
+  m_Name: Slime
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -561,12 +559,12 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 10
-  m_Sprite: {fileID: 21300000, guid: 46b736ee035af4b7193914f2705943d0, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 3568651fdbcce462b8ea8ffd5a1a5987, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 4.11, y: 2.76}
+  m_Size: {x: 10, y: 10}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -614,7 +612,7 @@ Animator:
   m_GameObject: {fileID: 1253615040}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 5cd676b1a1b5841f2931056dba1e48ac, type: 2}
+  m_Controller: {fileID: 9100000, guid: 74ba9543e35af4b2a82e47b165d0c2bf, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -636,34 +634,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   puddle: {fileID: 8645624879606019087, guid: dfda65da1b36af2429b4f9bf3d62afbe, type: 3}
---- !u!58 &1253615046
-CircleCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1253615040}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  serializedVersion: 2
-  m_Radius: 0.5
---- !u!114 &1253615047
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1253615040}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bc2a870c2072fec4c92cb2d2e8b82e09, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1598280848
 GameObject:
   m_ObjectHideFlags: 0
@@ -688,7 +658,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1598280848}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0.01, y: -1.64, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1253615042}
@@ -729,7 +699,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 114.899994, y: -34.700073}
+  m_AnchoredPosition: {x: 114.8999, y: -34.700073}
   m_SizeDelta: {x: 158.6213, y: 15.24271}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1697827445
@@ -815,6 +785,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dbe531487a2ee7548801066cd51173db, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  slidingSprite: {fileID: 21300000, guid: 3568651fdbcce462b8ea8ffd5a1a5987, type: 3}
   speed: 2
 --- !u!114 &1743367438
 MonoBehaviour:
@@ -993,7 +964,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 114.900024, y: -34.69995}
+  m_AnchoredPosition: {x: 114.90015, y: -34.69995}
   m_SizeDelta: {x: 158.6213, y: 15.242706}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1843182695

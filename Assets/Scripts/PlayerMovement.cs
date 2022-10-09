@@ -2,19 +2,33 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerMovement : MonoBehaviour
+public class PlayerMovement : Movement
 {
     [SerializeField] private float speed = 2;
     private Rigidbody2D rig;
+    private GeneralDeath generalDeath;
 
-    void Awake()
+    protected override void Awake()
     {
+        base.Awake();
+
         rig = transform.GetComponent<Rigidbody2D>();
+        generalDeath = transform.GetComponent<GeneralDeath>();
     }
 
-    void Update() 
+    protected override void Update() 
     {
-        int x = 0; 
+       if (generalDeath.IsDead)
+           return;
+
+        base.Update();
+        IsSliding = Input.GetKey(KeyCode.LeftShift);
+        setVelocity();
+    }
+
+    private void setVelocity()
+    {
+        int x = 0;
         int y = 0;
 
         if (Input.GetKey(KeyCode.W))

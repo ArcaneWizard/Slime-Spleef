@@ -4,25 +4,28 @@ using UnityEngine;
 
 public class LeavePuddle : MonoBehaviour
 {
+    private Movement movement;
+    private GeneralDeath generalDeath;
+
     [SerializeField] private Transform puddle;
-    private BounceHandler bounceHandler;
-
-    private const float puddleDelayDuration = 0.25f;
-    private float puddleDelayTimer;
-    private bool canSpawnPuddle;
-
     private List<GameObject> puddles;
     private int puddleIndex = 0;
 
+    private const float puddleDelayWhenSliding = 0.1f;
+    private const float puddleDelayWhenBouncing = 0.25f;
+    private float puddleDelayTimer;
+    private bool canSpawnPuddle;
+
     void Awake()
     {
-        bounceHandler = transform.GetComponent<BounceHandler>();
+        movement = transform.parent.GetComponent<Movement>();
+        generalDeath = transform.parent.GetComponent<GeneralDeath>();
     }
 
     void Start()
     {
         canSpawnPuddle = true;
-        puddleDelayTimer = puddleDelayDuration;
+        puddleDelayTimer = puddleDelayWhenBouncing;
 
         puddles = new List<GameObject>();
         for(int i = 0; i < 30; i++)
@@ -35,10 +38,13 @@ public class LeavePuddle : MonoBehaviour
 
     void LateUpdate()
     {
-        if (bounceHandler.IsGrounded && canSpawnPuddle)
+        //if (generalDeath.IsDead)
+       //     return;
+
+        if (movement.IsGrounded && canSpawnPuddle)
         {
             canSpawnPuddle = false;
-            puddleDelayTimer = puddleDelayDuration;
+            puddleDelayTimer = movement.IsSliding ? puddleDelayWhenSliding : puddleDelayWhenBouncing;
             leavePuddle();
         }
 

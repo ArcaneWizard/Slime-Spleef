@@ -9,6 +9,9 @@ public class PlayerThrow : Throw
 
     void Update()
     {
+        if (generalDeath.IsDead)
+            return;
+
         if (Input.GetMouseButtonUp(0))
         {
             Vector3 worldMousePosition = mainCamera.ScreenToWorldPoint(Input.mousePosition);

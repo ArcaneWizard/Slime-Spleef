@@ -7,12 +7,24 @@ public abstract class GeneralDeath : MonoBehaviour
 {
     public event Action UponDying;
     public bool IsDead { get; private set; }
+
+    private Energy energy;
     private Transform body;
 
     void Awake()
     {
         IsDead = false;
+        energy = transform.GetComponent<Energy>();
         body = transform.GetChild(0);
+    }
+
+    void Update()
+    {
+        if (IsDead)
+            return;
+
+        if (energy.EnergyValue <= 0f)
+            RegisterDeath();
     }
 
     public virtual void RegisterDeath()

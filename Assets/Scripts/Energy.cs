@@ -5,7 +5,7 @@ using UnityEngine;
 public class Energy : MonoBehaviour
 {
     public float EnergyValue { get; private set; }
-    private const float depletionRate = 10f;
+    private const float depletionRate = 2f;
 
     void Start()
     {

@@ -8,6 +8,9 @@ public class ShowPlayerEnergy : MonoBehaviour
     [SerializeField] private Energy energy;
     private Image image;
 
+    private const float minPercentForBlue = 0.6f;
+    private const float blueScale = 1f / (1f - minPercentForBlue);
+
     void Awake()
     {
         image = transform.GetComponent<Image>();
@@ -26,9 +29,14 @@ public class ShowPlayerEnergy : MonoBehaviour
 
     private void updateEnergyColor()
     {
-        int blue = (int)((4 * Mathf.Max((energy.NormalizedEnergyValue - 0.75f), 0)) * 255 );
-        int green = (int) Mathf.Min((energy.NormalizedEnergyValue * 255 / 0.75f), 255);
+        float blueValue = Mathf.Max(energy.NormalizedEnergyValue - minPercentForBlue, 0);
+        int blue = (int)(255 * blueScale * blueValue);
+
+        float greenValue = energy.NormalizedEnergyValue * 255 / minPercentForBlue;
+        int green = (int) Mathf.Min(greenValue, 255);
+
         int red = 255 - green;
+
         image.color = new Color32((byte)red, (byte)green, (byte)blue, (byte)255);
     }
 }

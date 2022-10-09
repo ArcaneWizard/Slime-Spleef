@@ -26,8 +26,9 @@ public class ShowPlayerEnergy : MonoBehaviour
 
     private void updateEnergyColor()
     {
-        int green = (int) (energy.NormalizedEnergyValue * 255);
+        int blue = (int)((4 * Mathf.Max((energy.NormalizedEnergyValue - 0.75f), 0)) * 255 );
+        int green = (int) Mathf.Min((energy.NormalizedEnergyValue * 255 / 0.75f), 255);
         int red = 255 - green;
-        image.color = new Color32((byte)red, (byte)green, (byte)0, (byte)255);
+        image.color = new Color32((byte)red, (byte)green, (byte)blue, (byte)255);
     }
 }

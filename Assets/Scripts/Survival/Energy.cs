@@ -7,6 +7,10 @@ public class Energy : MonoBehaviour
     private const float maxEnergyValue = 110f; // a slime's energy ranges from 0 to the maxEnergyValue. 
     private const float depletionRate = 7f; // the amount of energy the slime loses every second
 
+    private const float energyPerNormalPellet = 5f;
+    private const float energyPerSuperPellet = 25f;
+    private const float energyUsedToThrow = 15f;
+
     private Spawning spawning;
     private GeneralDeath generalDeath;
 
@@ -41,7 +45,15 @@ public class Energy : MonoBehaviour
     // A Slime is full once it's energy is 100 or more.
     public float NormalizedValue => Mathf.Min(1f, EnergyValue / 100f);
 
-    public void GainEnergy(float gain) => EnergyValue = Mathf.Min(EnergyValue + gain, maxEnergyValue); 
+    public void GainEnergyFromEating(FoodPelletType type)
+    {
+        float gain = (type == FoodPelletType.Normal) ? energyPerNormalPellet : energyPerSuperPellet;
+        ChangeEnergy(gain);
+    }
+
+    public void LoseEnergyFromThrowing() => ChangeEnergy(-energyUsedToThrow);
+
+    private void ChangeEnergy(float delta) => EnergyValue = Mathf.Min(EnergyValue + delta, maxEnergyValue); 
 
     private void resetEnergyLvls() => EnergyValue = maxEnergyValue;
 }

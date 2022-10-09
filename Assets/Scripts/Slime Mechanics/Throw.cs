@@ -6,17 +6,21 @@ public abstract class Throw : MonoBehaviour
 {
     [SerializeField] private Transform centerOfSlime;
     [SerializeField] private Transform pellet;
+    
     protected GeneralDeath generalDeath;
+    private Energy energy;
+    private Size size;
 
     private List<Transform> pellets;
     private int pelletIndex;
 
-    protected const float power = 350;
-
+    protected const float power = 460;
 
     void Awake()
     {
         generalDeath = transform.parent.GetComponent<GeneralDeath>();
+        energy = transform.parent.GetComponent<Energy>();
+        size = transform.GetComponent<Size>();
     }
 
     void Start()
@@ -35,19 +39,22 @@ public abstract class Throw : MonoBehaviour
 
     protected void throwBit(Vector3 location, float power)
     {
+        // calculate throw trajectory
         Vector3 dir = location - transform.position;
         Vector3 dirOnPlane = Constants.WorldPlaneRotation * new Vector3(dir.x, dir.y, 0);
-        Vector3 throwDir = (dirOnPlane + new Vector3(0, 2.5f, -2.5f)).normalized;
+        Vector3 throwDir = (dirOnPlane + new Vector3(0, 1.5f, -1.5f)).normalized;
         Vector3 force = power * throwDir;
 
+        // get available pellet, spawn it, and throw it correctly
         Transform currPellet = pellets[pelletIndex];
         Pellet pellet = currPellet.GetComponent<Pellet>();
 
         currPellet.gameObject.SetActive(true);
         pellet.ConfigureTrajectory(centerOfSlime.position, force);
 
-        transform.GetComponent<Size>().decreaseFullSize();
-
+        // decrease slime size, slime energy, and use different pellet in future
+        size.UpdateSizeAfterThrowingPellet();
+        energy.LoseEnergyFromThrowing();
         pelletIndex = ++pelletIndex % pellets.Count;
     }
 }

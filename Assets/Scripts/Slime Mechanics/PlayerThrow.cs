@@ -11,7 +11,7 @@ public class PlayerThrow : Throw
         if (generalDeath.IsDead)
             return;
 
-        if (Input.GetMouseButtonUp(0))
+        if (Input.GetMouseButtonDown(0))
         {
             Vector3 worldMousePosition = mainCamera.ScreenToWorldPoint(Input.mousePosition);
             throwBit(worldMousePosition, power);

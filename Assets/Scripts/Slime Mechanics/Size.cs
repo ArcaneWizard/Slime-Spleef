@@ -4,12 +4,12 @@ using UnityEngine;
 
 public class Size : MonoBehaviour
 {
-    private const float maxSize = 1.5f;
-    private const float minSize = 0.15f;
-    private const float startingSize = 0.4f;
-    private float fullSize;
+    private const float maxSize = 1.5f * 1.5f;
+    private const float minSize = 0.3f * 0.3f;
+    private const float startingSize = 0.4f * 0.4f;
 
     public float size { get; private set; }
+    private float fullSize;
 
     private Energy energy;
     private Spawning spawning;
@@ -28,8 +28,7 @@ public class Size : MonoBehaviour
 
     void Update()
     {
-
-        size = energy.NormalizedValue * fullSize;
+        size = (0.5f * energy.NormalizedValue + 0.5f) * fullSize;
 
         if (size > maxSize)
             size = maxSize;
@@ -37,22 +36,27 @@ public class Size : MonoBehaviour
         if (size < minSize)
             size = minSize;
 
-        transform.localScale = new Vector3(size, size, size);
+        float width = Mathf.Pow(size, 0.5f); 
+        transform.localScale = new Vector3(width, width, width);
     }
 
-    public void increaseFullSize()
+    public void UpdateSizeAfterThrowingPellet() => decreaseFullSize(0.01f);
+
+    public void UpdateSizeAfterEatingFood(FoodPelletType type)
     {
-        fullSize *= 1.05f;
+        if (type == FoodPelletType.Normal)
+            increaseFullSize(0.002f); 
+
+        else if (type == FoodPelletType.Super)
+            increaseFullSize(0.01f);
     }
 
-    public void decreaseFullSize()
-    {
-        fullSize *= 0.95f;
-    }
+    private void increaseFullSize(float delta) => fullSize = Mathf.Min(fullSize + delta, maxSize);
+    private void decreaseFullSize(float delta) => fullSize = Mathf.Max(fullSize - delta, minSize);
 
     private void resetSize()
     {
         fullSize = startingSize;
-        size = energy.NormalizedValue * fullSize;
+        size = (0.5f * energy.NormalizedValue + 0.5f) * fullSize;
     }
 }

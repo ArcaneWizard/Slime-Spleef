@@ -4,28 +4,16 @@ using UnityEngine;
 
 public class PlayerMovement : Movement
 {
-    [SerializeField] private float speed = 2;
-    private Rigidbody2D rig;
-    private Transform sprite;
-
-    protected override void Awake()
-    {
-        base.Awake();
-
-        rig = transform.GetComponent<Rigidbody2D>();
-        sprite = transform.GetChild(0);
-    }
-
     protected override void Update() 
     {
         if (generalDeath.IsDead)
         {
-            rig.velocity = Vector2.zero;
+            setVelocity(Vector2.zero);
             return;
         }
 
-        base.Update();
         IsSliding = Input.GetKey(KeyCode.LeftShift);
+        base.Update();
         setVelocity();
     }
 
@@ -43,6 +31,6 @@ public class PlayerMovement : Movement
         if (Input.GetKey(KeyCode.D))
             ++x;
 
-        rig.velocity = new Vector2(x, y) * speed * Mathf.Max((sprite.localScale.x / 0.6f), 1);
+        setVelocity(new Vector2(x, y));
     }
 }

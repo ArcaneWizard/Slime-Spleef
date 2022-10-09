@@ -46,6 +46,8 @@ public abstract class Throw : MonoBehaviour
         currPellet.gameObject.SetActive(true);
         pellet.ConfigureTrajectory(centerOfSlime.position, force);
 
+        transform.GetComponent<Size>().decreaseFullSize();
+
         pelletIndex = ++pelletIndex % pellets.Count;
     }
 }

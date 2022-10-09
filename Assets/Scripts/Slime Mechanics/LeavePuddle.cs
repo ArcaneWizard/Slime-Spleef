@@ -9,6 +9,8 @@ public class LeavePuddle : MonoBehaviour
     private Spawning spawning;
 
     [SerializeField] private Transform puddle;
+    [SerializeField] private Transform centerOfSlime;
+
     private List<GameObject> puddles;
     private int puddleIndex = 0;
 
@@ -70,7 +72,7 @@ public class LeavePuddle : MonoBehaviour
 
         float slimeSize = transform.localScale.x;
         newPuddle.localScale = new Vector3(1, 0.5f, 1) * slimeSize * 3;
-        newPuddle.position = transform.parent.position + Constants.SlimeCenterOffsetFromSprite - new Vector3(0, 0.2f * slimeSize, 0);
+        newPuddle.position = centerOfSlime.position - new Vector3(0, 0.1f * slimeSize, 0);
         newPuddle.gameObject.SetActive(true);
 
         float time = movement.IsSliding ? 2.8f : 20f;

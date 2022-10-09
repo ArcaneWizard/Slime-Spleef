@@ -6,12 +6,14 @@ public class PlayerMovement : Movement
 {
     [SerializeField] private float speed = 2;
     private Rigidbody2D rig;
+    private Transform sprite;
 
     protected override void Awake()
     {
         base.Awake();
 
         rig = transform.GetComponent<Rigidbody2D>();
+        sprite = transform.GetChild(0);
     }
 
     protected override void Update() 
@@ -41,6 +43,6 @@ public class PlayerMovement : Movement
         if (Input.GetKey(KeyCode.D))
             ++x;
 
-        rig.velocity = new Vector2(x, y) * speed;
+        rig.velocity = new Vector2(x, y) * speed * Mathf.Max((sprite.localScale.x / 0.6f), 1);
     }
 }

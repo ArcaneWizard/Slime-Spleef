@@ -31,7 +31,7 @@ public abstract class Throw : MonoBehaviour
         }
 
         pelletIndex = 0;
-    }
+    } 
 
     protected void throwBit(Vector3 location, float power)
     {

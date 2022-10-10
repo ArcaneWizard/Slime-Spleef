@@ -483,7 +483,7 @@ GameObject:
   - component: {fileID: 6781157318686726742}
   - component: {fileID: 6781157318686726741}
   - component: {fileID: 6781157318686726730}
-  - component: {fileID: 6781157318686726729}
+  - component: {fileID: 5377867999401406317}
   m_Layer: 6
   m_Name: Player
   m_TagString: Untagged
@@ -565,7 +565,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   deathScreenAnimator: {fileID: 0}
---- !u!114 &6781157318686726729
+--- !u!114 &5377867999401406317
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -574,7 +574,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 6781157318686726743}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1d5e0bbb8f00e4b5cb6c691bdcd6b2e7, type: 3}
+  m_Script: {fileID: 11500000, guid: f565ce12fe1754b56b0bf1f9d848c7d4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &6781157319679686615

@@ -1311,7 +1311,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   energy: {fileID: 1743367438}
-  spawning: {fileID: 1743367442}
+  spawning: {fileID: 0}
 --- !u!114 &1697827446
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1359,17 +1359,6 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2b2263dc5d5cbf8429ebadd30d155ef4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &1743367442 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 6781157318686726729, guid: 53b98255dcfe443ee95f194c8aa26c0c, type: 3}
-  m_PrefabInstance: {fileID: 6781157319279736667}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1d5e0bbb8f00e4b5cb6c691bdcd6b2e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &1757467928
@@ -1841,7 +1830,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1743367442}
+      - m_Target: {fileID: 6781157319279736668}
         m_TargetAssemblyTypeName: Spawning, Assembly-CSharp
         m_MethodName: StartGame
         m_Mode: 1
@@ -2054,3 +2043,14 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 53b98255dcfe443ee95f194c8aa26c0c, type: 3}
+--- !u!114 &6781157319279736668 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5377867999401406317, guid: 53b98255dcfe443ee95f194c8aa26c0c, type: 3}
+  m_PrefabInstance: {fileID: 6781157319279736667}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f565ce12fe1754b56b0bf1f9d848c7d4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

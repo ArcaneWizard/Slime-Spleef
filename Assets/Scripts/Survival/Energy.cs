@@ -10,6 +10,7 @@ public class Energy : MonoBehaviour
     private const float energyPerNormalPellet = 8f;
     private const float energyPerSuperPellet = 24f;
     private const float energyUsedToThrow = 15f;
+    private const float energyDrainedByPuddle = 0.03f;
 
     private Spawning spawning;
     private GeneralDeath generalDeath;
@@ -52,6 +53,8 @@ public class Energy : MonoBehaviour
     }
 
     public void LoseEnergyFromThrowing() => ChangeEnergy(-energyUsedToThrow);
+
+    public void LoseEnergyFromPuddle() => ChangeEnergy(-energyDrainedByPuddle);
 
     private void ChangeEnergy(float delta) => EnergyValue = Mathf.Min(EnergyValue + delta, maxEnergyValue); 
 

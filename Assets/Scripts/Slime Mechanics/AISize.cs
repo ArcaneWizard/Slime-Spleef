@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class AISize : Size
 {
-    private static Vector2 sizeRange = new Vector2(0.7f * startingSize, startingSize * 5);
+    private static Vector2 sizeRange = new Vector2(0.7f * StartingSize, StartingSize * 5);
 
     protected override void Start()
     {

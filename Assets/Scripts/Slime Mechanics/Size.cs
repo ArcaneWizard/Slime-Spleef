@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class Size : MonoBehaviour
 {
-    protected const float maxSize = 1.5f * 1.5f;
-    protected const float minSize = 0.3f * 0.3f;
-    protected const float startingSize = 0.4f * 0.4f;
+    public const float MaxSize = 1.5f * 1.5f;
+    public const float MinSize = 0.3f * 0.3f;
+    public const float StartingSize = 0.4f * 0.4f;
 
     public float size { get; private set; }
     protected float fullSize;
@@ -30,11 +30,11 @@ public class Size : MonoBehaviour
     {
         updateSize();
 
-        if (size > maxSize)
-            size = maxSize;
+        if (size > MaxSize)
+            size = MaxSize;
 
-        if (size < minSize)
-            size = minSize;
+        if (size < MinSize)
+            size = MinSize;
 
         float width = Mathf.Pow(size, 0.5f); 
         transform.localScale = new Vector3(width, width, width);
@@ -51,14 +51,14 @@ public class Size : MonoBehaviour
             increaseFullSize(0.01f);
     }
 
-    protected void updateSize() => size = fullSize * Mathf.Exp(2f * energy.NormalizedValue - 2f);
+    protected void updateSize() => size = fullSize * (energy.NormalizedValue * 0.7f + 0.3f);
 
-    private void increaseFullSize(float delta) => fullSize = Mathf.Min(fullSize + delta, maxSize);
-    private void decreaseFullSize(float delta) => fullSize = Mathf.Max(fullSize - delta, minSize);
+    private void increaseFullSize(float delta) => fullSize = Mathf.Min(fullSize + delta, MaxSize);
+    private void decreaseFullSize(float delta) => fullSize = Mathf.Max(fullSize - delta, MinSize);
 
     private void resetSize()
     {
-        fullSize = startingSize;
+        fullSize = StartingSize;
         updateSize();
     }
 }

@@ -23,12 +23,12 @@ public class FoodPellet : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D col)
     {
-        // upon colliding with a slime, this pellet supplies the slime with energy, increases the slime's size,
-        // and then this pellet disappears.
+        // upon colliding with a slime, this pellet supplies the slime with energy, additional size, and additional score.
         if (col.gameObject.layer == 6)
         {
             col.transform.parent.GetComponent<Energy>().GainEnergyFromEating(type);
             col.transform.GetComponent<Size>().UpdateSizeAfterEatingFood(type);
+            col.transform.parent.GetComponent<Score>().GainScoreFromFood(type);
 
             FoodPelletsSpawner.AddPelletAwaitingSpawn(gameObject);
             gameObject.SetActive(false);

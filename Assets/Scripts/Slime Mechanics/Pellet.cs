@@ -8,7 +8,9 @@ public class Pellet : MonoBehaviour
 
     private Vector3 rotationalChange;
     private Vector3 initPos;
-    private const float epsilon = 0.1f;
+
+    private const float epsilon = 0.2f;
+    private Vector3 initialSplashSize = new Vector3(4, 2, 4) * 1.6f;
 
     private List<Transform> puddles;
     private int puddleIndex;
@@ -27,7 +29,7 @@ public class Pellet : MonoBehaviour
 
             GameObject puddleClone = Instantiate(child, transform.GetChild(0).position, Quaternion.identity, null);
             float pelletSize = transform.localScale.x;
-            puddleClone.transform.localScale = new Vector3(4, 2, 4) * pelletSize;
+            puddleClone.transform.localScale = initialSplashSize * pelletSize;
 
             puddleClone.SetActive(false);
 
@@ -67,7 +69,7 @@ public class Pellet : MonoBehaviour
         puddleIndex = ++puddleIndex % puddles.Count;
 
         float pelletSize = transform.localScale.x;
-        newPuddle.localScale = new Vector3(4, 2, 4) * pelletSize;
+        newPuddle.localScale = initialSplashSize * pelletSize;
         newPuddle.position = transform.GetChild(0).position - new Vector3(0, 0.2f * pelletSize, 0);
         newPuddle.eulerAngles = new Vector3(0, 0, 0);
         newPuddle.gameObject.SetActive(true);

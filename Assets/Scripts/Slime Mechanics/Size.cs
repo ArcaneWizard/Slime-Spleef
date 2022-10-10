@@ -51,6 +51,8 @@ public class Size : MonoBehaviour
             increaseFullSize(0.01f);
     }
 
+    public void UpdateSizeAfterKill(float sizeOfKill) => increaseFullSize(Mathf.Min(0.8f * sizeOfKill, 0.512f));
+
     protected void updateSize() => size = fullSize * (energy.NormalizedValue * 0.7f + 0.3f);
 
     private void increaseFullSize(float delta) => fullSize = Mathf.Min(fullSize + delta, MaxSize);

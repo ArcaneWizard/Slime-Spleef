@@ -44,6 +44,7 @@ public abstract class Movement : MonoBehaviour
     {
         if (generalDeath.IsDead)
         {
+            animator.SetBool("IsSliding", true);
             rig.velocity = Vector2.zero;
             return;
         }
@@ -64,6 +65,8 @@ public abstract class Movement : MonoBehaviour
         Speed = animator.GetBool("IsSliding") ? slidingSpeed : bouncingSpeed;
         Speed *= puddleSlowFactor;
         rig.velocity = MovementDir.normalized * Speed * Mathf.Max((body.localScale.x / 0.6f), 1);
+
+        updateSpeedAndEnergy();
     }
 
     public void ClearCollidedPuddles()
@@ -92,16 +95,19 @@ public abstract class Movement : MonoBehaviour
         if (col.gameObject.layer == 8)
             collidedPuddles.Add(col.transform);
 
-        checkPuddleLanding();
+        updateSpeedAndEnergy();
     }
 
-    private void checkPuddleLanding()
+    private void updateSpeedAndEnergy()
     {
-        if (generalDeath.IsDead)
+        if (generalDeath.IsDead || !IsGrounded)
+        {
+            puddleSlowFactor = 1f;
             return;
+        }
 
         // Decrease speed proportionally to the volume of the puddles
-        puddleSlowFactor = 1 - Mathf.Min(0.7f, sumCollidedPuddlesSize() / (3 * Size.MaxSize));
+        puddleSlowFactor = 1 - Mathf.Min(0.5f, sumCollidedPuddlesSize() / (3 * Size.MaxSize));
 
         // Decrease energy per puddle the slime is in
         for (int i = 0; i < Mathf.Min(3, getNumCollidedPuddles()); i++)
@@ -121,7 +127,6 @@ public abstract class Movement : MonoBehaviour
     }
 
     void OnTriggerEnter2D(Collider2D col) => checkPuddleEnter(col);
-    void OnTriggerStay2D(Collider2D col) => checkPuddleLanding();
     void OnTriggerExit2D(Collider2D col) => checkPuddleExit(col);
 
     private float getNumCollidedPuddles()

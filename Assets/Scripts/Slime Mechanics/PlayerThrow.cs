@@ -13,8 +13,9 @@ public class PlayerThrow : Throw
 
         if (Input.GetMouseButtonDown(0))
         {
-            Vector3 worldMousePosition = mainCamera.ScreenToWorldPoint(Input.mousePosition);
-            throwBit(worldMousePosition, power);
+            Vector2 dir = Input.mousePosition - new Vector3(Screen.width / 2f, Screen.height / 2f, 0);
+           // Vector3 worldMousePosition = mainCamera.ScreenToWorldPoint(Input.mousePosition);
+            throwBit(dir.normalized, power);
         }
     }
 }

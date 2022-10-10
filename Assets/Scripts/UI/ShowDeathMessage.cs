@@ -7,6 +7,8 @@ public class ShowDeathMessage : MonoBehaviour
 {
     [SerializeField] private Energy playerEnergy;
     [SerializeField] private GeneralDeath playerDeath;
+    [SerializeField] private Score score;
+
     private Text text;
 
     void Awake()

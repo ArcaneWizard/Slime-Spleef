@@ -6,8 +6,11 @@ public class PlayerMovement : Movement
 {
     protected override void Update() 
     {
-        IsSliding = Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.Space);
-        GetUserInput();
+        if (!generalDeath.IsDead)
+        {
+            IsSliding = Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.Space);
+            GetUserInput();
+        }
 
         base.Update();
     }

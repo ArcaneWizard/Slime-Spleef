@@ -25,8 +25,11 @@ public class AIMovement : Movement
 
     protected override void Update()
     {
-        IsSliding = IsAISliding();
-        MovementDir = GetAIDirection();
+        if (!generalDeath.IsDead)
+        {
+            IsSliding = IsAISliding();
+            MovementDir = GetAIDirection();
+        }
 
         base.Update();
     }

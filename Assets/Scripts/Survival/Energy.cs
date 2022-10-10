@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class Energy : MonoBehaviour
 {
-    private float EnergyValue;
+    public float EnergyValue { get; private set; }
 
     private const float maxEnergyValue = 110f; // a slime's energy ranges from 0 to the maxEnergyValue. 
     private const float depletionRate = 7f; // the amount of energy the slime loses every second
@@ -10,7 +10,7 @@ public class Energy : MonoBehaviour
     private const float energyPerNormalPellet = 8f;
     private const float energyPerSuperPellet = 24f;
     private const float energyUsedToThrow = 15f;
-    private const float energyDrainedByPuddle = 0.03f;
+    private const float energyDrainedByPuddle = 0.06f;
 
     private Spawning spawning;
     private GeneralDeath generalDeath;
@@ -23,6 +23,8 @@ public class Energy : MonoBehaviour
 
     void Start()
     {
+        EnergyValue = 0f;
+
         spawning.OnNewSpawn += resetEnergyLvls;
         resetEnergyLvls();
     }

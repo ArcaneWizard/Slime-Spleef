@@ -48,6 +48,11 @@ public class LeavePuddle : MonoBehaviour
         initializePuddleSystem();
     }
 
+    private void Update()
+    {
+        Debug.Log(recentlySpawnedPuddles.Count);
+    }
+
     void LateUpdate()
     {
         if (generalDeath.IsDead)
@@ -87,15 +92,17 @@ public class LeavePuddle : MonoBehaviour
         puddleIndex = ++puddleIndex % puddles.Count;
 
         float slimeSize = transform.localScale.x;
-        newPuddle.localScale = new Vector3(1.05f, 0.45f, 1) * slimeSize * 3;
+        newPuddle.localScale = new Vector3(1.61f, 1.47f, 1) * slimeSize * 3;
 
         Vector3 sizeOffsetForPuddle = -new Vector3(0, 0.1f * slimeSize, 0);
         newPuddle.position = centerOfSlime.position + sizeOffsetForPuddle + speedOffsetForPuddle();
         newPuddle.gameObject.SetActive(true);
 
+        // for 1 second, puddle is added to "recently spawned set"
         IEnumerator setRecentSpawn = InitiateRecentlySpawned(1f, newPuddle.transform);
         StartCoroutine(setRecentSpawn);
 
+        // puddle will disappear after x seconds
         float time = movement.IsSliding ? lingerDurationAfterSliding : lingerDurationAfterBouncing;
         IEnumerator countdown = newPuddle.GetComponent<Puddles>().InitiateDisappearingCountdown(time);
         StartCoroutine(countdown);

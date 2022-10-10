@@ -6,12 +6,12 @@ public static class TextGenerator
 {
     public static string GenerateAIName()
     {
-        bool includeAdj = UnityEngine.Random.Range(0, 1) < 0.95;
-        bool includeSuffix = UnityEngine.Random.Range(0, 1) < 0.15;
-        bool capitalizeAdj = UnityEngine.Random.Range(0, 1) < 0.5;
-        bool capitalizeName = UnityEngine.Random.Range(0, 1) < 0.5;
-        bool capitalizeSuffix = UnityEngine.Random.Range(0, 1) < 0.5;
-        bool includeNumber = UnityEngine.Random.Range(0, 1) < 0.8;
+        bool includeAdj = UnityEngine.Random.Range(0f, 1f) < 0.95;
+        bool includeSuffix = UnityEngine.Random.Range(0f, 1f) < 0.15;
+        bool capitalizeAdj = UnityEngine.Random.Range(0f, 1f) < 0.5;
+        bool capitalizeName = UnityEngine.Random.Range(0f, 1f) < 0.5;
+        bool capitalizeSuffix = UnityEngine.Random.Range(0f, 1f) < 0.5;
+        bool includeNumber = UnityEngine.Random.Range(0f, 1f) < 0.21;
 
         string[] adjectives = { "super", "epic", "ultra", "gamer", "red", "green", "greedy", "big", "small", "blue", "!",
             "purple", "yellow", "orange", "flacid", "strong", "yeeter", "massive", "mini", "bad", "beefy", "magnetic", "_Xx__",
@@ -36,10 +36,13 @@ public static class TextGenerator
         if (includeSuffix && capitalizeSuffix)
             suffix = capitalize(suffix);
 
+        string space1 = (UnityEngine.Random.Range(0, 2) == 1) ? " " : "";
+        string space2 = (UnityEngine.Random.Range(0, 2) == 1) ? " " : "";
+
         if (includeNumber)
         {
-            number = (int) UnityEngine.Random.Range(0, 100001);
-            return adjective + name + suffix + number.ToString();
+            number = UnityEngine.Random.Range(0, 100);
+            return adjective + space1 + name + space2 + suffix + number.ToString();
         }
 
         return adjective + name + suffix;
@@ -78,12 +81,12 @@ public static class TextGenerator
 
     private static string generateEnergyOutDeathMessage()
     {
-        return "You died from Energy loss. Eat food to stay alive.";
+        return "You died from Energy loss. Eat food to stay alive and avoid trudging through slime.";
     }
 
     private static string generatePuddleFallDeathMessage()
     {
-        return "You died by falling in a Puddle. Watch out for those!";
+        return "You died by falling into a slimy puddle. They sure do zap your energy!";
     }
 
     private static string pickRandom(string[] collection)

@@ -14,7 +14,7 @@ public abstract class Throw : MonoBehaviour
     private List<Transform> pellets;
     private int pelletIndex;
 
-    protected const float power = 460;
+    protected const float power = 650;
 
     void Awake()
     {
@@ -37,13 +37,11 @@ public abstract class Throw : MonoBehaviour
         pelletIndex = 0;
     } 
 
-    protected void throwBit(Vector3 location, float power)
+    protected void throwBit(Vector3 dir, float power)
     {
-        // calculate throw trajectory
-        Vector3 dir = location - transform.position;
         Vector3 dirOnPlane = Constants.WorldPlaneRotation * new Vector3(dir.x, dir.y, 0);
-        Vector3 throwDir = (dirOnPlane + new Vector3(0, 1.5f, -1.5f)).normalized;
-        Vector3 force = power * throwDir;
+        Vector3 throwDir = (dirOnPlane + new Vector3(0, 1f, -1f)).normalized;
+        Vector3 force = power * throwDir * (0.06f * (centerOfSlime.position.y - transform.localPosition.y - transform.parent.position.y) + 1f);
 
         // get available pellet, spawn it, and throw it correctly
         Transform currPellet = pellets[pelletIndex];

@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class LeavePuddle : MonoBehaviour
 {
+
+    public HashSet<Transform> recentlySpawnedPuddles; /* { get; private set; } */
+
     private Movement movement;
     private GeneralDeath generalDeath;
     private Spawning spawning;
@@ -29,6 +32,7 @@ public class LeavePuddle : MonoBehaviour
     void Start()
     {
         puddles = new List<GameObject>();
+        recentlySpawnedPuddles = new HashSet<Transform>();
         for(int i = 0; i < 30; i++)
         {
             GameObject puddleClone = Instantiate(puddle.gameObject, transform.position, Quaternion.identity, null);
@@ -63,6 +67,14 @@ public class LeavePuddle : MonoBehaviour
     {
         canSpawnPuddle = true;
         puddleDelayTimer = puddleDelayWhenBouncing;
+        recentlySpawnedPuddles.Clear();
+    }
+
+    private IEnumerator InitiateRecentlySpawned(float time, Transform puddle)
+    {
+        recentlySpawnedPuddles.Add(puddle);
+        yield return new WaitForSeconds(time);
+        recentlySpawnedPuddles.Remove(puddle);
     }
 
     private void leavePuddle()
@@ -75,7 +87,10 @@ public class LeavePuddle : MonoBehaviour
         newPuddle.position = centerOfSlime.position - new Vector3(0, 0.1f * slimeSize, 0);
         newPuddle.gameObject.SetActive(true);
 
-        float time = movement.IsSliding ? 2.8f : 20f;
+        IEnumerator setRecentSpawn = InitiateRecentlySpawned(1f, newPuddle.transform);
+        StartCoroutine(setRecentSpawn);
+
+        float time = movement.IsSliding ? 3f : 20f;
         IEnumerator countdown = newPuddle.GetComponent<Puddles>().InitiateDisappearingCountdown(time);
         StartCoroutine(countdown);
     }

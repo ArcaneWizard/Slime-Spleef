@@ -28,7 +28,7 @@ public class Size : MonoBehaviour
 
     void Update()
     {
-        size = (0.5f * energy.NormalizedValue + 0.5f) * fullSize;
+        updateSize();
 
         if (size > maxSize)
             size = maxSize;
@@ -57,6 +57,8 @@ public class Size : MonoBehaviour
     private void resetSize()
     {
         fullSize = startingSize;
-        size = (0.5f * energy.NormalizedValue + 0.5f) * fullSize;
+        updateSize();
     }
+
+    private void updateSize() => size = fullSize * Mathf.Exp(2f * energy.NormalizedValue - 2f);
 }

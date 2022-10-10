@@ -12,7 +12,7 @@ public abstract class Movement : MonoBehaviour
     public bool IsGrounded { get; private set; }
     public bool IsSliding { get; protected set; }
 
-    private const float normalAnimationSpeed = 1f;
+    private const float normalAnimationSpeed = 0.87f;
     private const float groundPoundSpeed = 1.4f;
 
     protected const float slidingSpeed = 2.7f;

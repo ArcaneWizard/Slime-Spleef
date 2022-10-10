@@ -10,6 +10,9 @@ public abstract class Movement : MonoBehaviour
     private Transform body;
     private LeavePuddle puddleLeaver;
     private Energy energy;
+    private Collider2D slimeCollider;
+
+    [SerializeField] private Collider2D pvpCollider;
 
     private HashSet<Transform> collidedPuddles;
 
@@ -24,7 +27,7 @@ public abstract class Movement : MonoBehaviour
 
     protected const float slidingSpeed = 2.7f;
     protected const float bouncingSpeed = 2f;
-    protected float puddleSlowFactor = 1f;
+    protected float puddleSlowFactor = 1.5f;
 
     protected virtual void Awake()
     {
@@ -34,6 +37,7 @@ public abstract class Movement : MonoBehaviour
         body = transform.GetChild(0);
         puddleLeaver = transform.GetChild(0).GetComponent<LeavePuddle>();
         energy = transform.GetComponent<Energy>();
+        slimeCollider = transform.GetChild(0).GetComponent<Collider2D>();
 
         collidedPuddles = new HashSet<Transform>();
 
@@ -42,12 +46,15 @@ public abstract class Movement : MonoBehaviour
 
     protected virtual void Update()
     {
+        pvpCollider.enabled = !generalDeath.IsDead;
+
         if (generalDeath.IsDead)
         {
-            animator.SetBool("IsSliding", true);
             rig.velocity = Vector2.zero;
+            slimeCollider.enabled = false;
             return;
         }
+        slimeCollider.enabled = !IsGrounded;
 
         animator.speed = (IsSliding && !IsGrounded) ? groundPoundSpeed : normalAnimationSpeed;
 
@@ -64,9 +71,11 @@ public abstract class Movement : MonoBehaviour
         // set slime velocity
         Speed = animator.GetBool("IsSliding") ? slidingSpeed : bouncingSpeed;
         Speed *= puddleSlowFactor;
-        rig.velocity = MovementDir.normalized * Speed * Mathf.Max((body.localScale.x / 0.6f), 1);
+        rig.velocity = MovementDir.normalized * Speed * Mathf.Max((body.localScale.x / 0.6f), 0.7f);
 
         updateSpeedAndEnergy();
+        stayInMapBounds();
+
     }
 
     public void ClearCollidedPuddles()
@@ -111,9 +120,7 @@ public abstract class Movement : MonoBehaviour
 
         // Decrease energy per puddle the slime is in
         for (int i = 0; i < Mathf.Min(3, getNumCollidedPuddles()); i++)
-        {
             energy.LoseEnergyFromPuddle();
-        }
         
     }
 
@@ -140,5 +147,18 @@ public abstract class Movement : MonoBehaviour
         }
 
         return num;
+    }
+
+    private void stayInMapBounds()
+    {
+        if (transform.position.x <= -50f)
+            transform.position = new Vector3(-50f, transform.position.y, transform.position.z);
+        if (transform.position.y <= -50f)
+            transform.position = new Vector3(transform.position.x, -50f, transform.position.z);
+
+        if (transform.position.x >= 50f)
+            transform.position = new Vector3(50f, transform.position.y, transform.position.z);
+        if (transform.position.y >= 50f)
+            transform.position = new Vector3(transform.position.x, 50f, transform.position.z);
     }
 }

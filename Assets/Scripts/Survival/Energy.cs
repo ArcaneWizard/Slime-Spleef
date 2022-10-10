@@ -9,8 +9,8 @@ public class Energy : MonoBehaviour
 
     private const float energyPerNormalPellet = 8f;
     private const float energyPerSuperPellet = 24f;
-    private const float energyUsedToThrow = 15f;
-    private const float energyDrainedByPuddle = 0.06f;
+    private const float energyUsedToThrow = 7.5f;
+    private const float energyDrainedByPuddle = 0.12f;
 
     private Spawning spawning;
     private GeneralDeath generalDeath;

@@ -9,6 +9,7 @@ public abstract class Throw : MonoBehaviour
     
     protected GeneralDeath generalDeath;
     private Energy energy;
+    private Spawning spawning;
     private Size size;
 
     private List<Transform> pellets;
@@ -20,6 +21,7 @@ public abstract class Throw : MonoBehaviour
     {
         generalDeath = transform.parent.GetComponent<GeneralDeath>();
         energy = transform.parent.GetComponent<Energy>();
+        spawning = transform.parent.GetComponent<Spawning>();
         size = transform.GetComponent<Size>();
     }
 
@@ -46,6 +48,7 @@ public abstract class Throw : MonoBehaviour
         // get available pellet, spawn it, and throw it correctly
         Transform currPellet = pellets[pelletIndex];
         Pellet pellet = currPellet.GetComponent<Pellet>();
+        currPellet.GetChild(0).GetComponent<SpriteRenderer>().color = spawning.SlimeColor;
 
         currPellet.gameObject.SetActive(true);
         pellet.ConfigureTrajectory(centerOfSlime.position, force);

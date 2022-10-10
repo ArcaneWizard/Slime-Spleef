@@ -43,12 +43,14 @@ public abstract class GeneralDeath : MonoBehaviour
     {
         IsDead = true;
         UponDying?.Invoke();
+        score.SlimeScore = 0;
     }
 
     private void EntityIsAlive()
     {
         movement.ClearCollidedPuddles();
         IsDead = false;
+        score.SlimeScore = 0;
     }
 
     void OnTriggerEnter2D(Collider2D col)

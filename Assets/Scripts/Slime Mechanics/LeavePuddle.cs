@@ -48,11 +48,6 @@ public class LeavePuddle : MonoBehaviour
         initializePuddleSystem();
     }
 
-    private void Update()
-    {
-        Debug.Log(recentlySpawnedPuddles.Count);
-    }
-
     void LateUpdate()
     {
         if (generalDeath.IsDead)
@@ -96,6 +91,8 @@ public class LeavePuddle : MonoBehaviour
 
         Vector3 sizeOffsetForPuddle = -new Vector3(0, 0.1f * slimeSize, 0);
         newPuddle.position = centerOfSlime.position + sizeOffsetForPuddle + speedOffsetForPuddle();
+
+        newPuddle.GetComponent<SpriteRenderer>().color = spawning.SlimeColor;
         newPuddle.gameObject.SetActive(true);
 
         // for 1 second, puddle is added to "recently spawned set"

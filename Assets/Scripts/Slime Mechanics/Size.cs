@@ -1,8 +1,9 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Size : MonoBehaviour
+public class Size : MonoBehaviour, IComparable<Size>
 {
     public const float MaxSize = 1.5f * 1.5f;
     public const float MinSize = 0.3f * 0.3f;
@@ -62,5 +63,15 @@ public class Size : MonoBehaviour
     {
         fullSize = StartingSize;
         updateSize();
+    }
+
+    public int CompareTo(Size other)
+    {
+        if (size > other.size)
+            return 1;
+        else if (size == other.size)
+            return 0;
+        else
+            return -1;
     }
 }

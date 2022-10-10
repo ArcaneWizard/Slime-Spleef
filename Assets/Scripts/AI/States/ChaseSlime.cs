@@ -4,18 +4,33 @@ using UnityEngine;
 
 public class ChaseSlime : IState
 {
-    public void OnEnter()
+    private Transform slimeToChase;
+
+    private Transform slime;
+    private AIMovement movement;
+
+    public ChaseSlime(Transform slime, AIMovement movement)
     {
-        throw new System.NotImplementedException();
+        this.slime = slime;
+        this.movement = movement;
     }
 
-    public void OnExit()
+    public void UpdateSlimeToChase(Transform slime) => slimeToChase = slime;
+
+    public void OnEnter()
     {
-        throw new System.NotImplementedException();
+        Vector2 dirToSlime = slimeToChase.position - slime.position;
+        movement.UpdateChaseDir(dirToSlime);
     }
 
     public void Tick()
     {
-        throw new System.NotImplementedException();
+        Vector2 dirToSlime = slimeToChase.position - slime.position;
+        movement.UpdateChaseDir(dirToSlime);
+    }
+
+    public void OnExit()
+    {
+        movement.UpdateChaseDir(Vector2.zero);
     }
 }

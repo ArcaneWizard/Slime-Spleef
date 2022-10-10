@@ -5,22 +5,25 @@ public class AIMovement : Movement
 {
     private HashSet<Vector2> nearbyPuddles;
 
-    private const float puddleScanRadius = 3f;
+    private const float puddleScanRadius = 5f;
     private const float puddleAversionAngle = 30f;
-    private float cosineAversionAngle = Mathf.Cos(puddleAversionAngle); 
+    private float cosineAversionAngle = Mathf.Cos(puddleAversionAngle);
+
+    private const float foodScanRadius = 5f;
 
     private IState state;
     private float maxAttemptsToChangeDir;
-    private Vector2 intelligenceRange = new Vector2(3f, 10f);
+    private Vector2 intelligenceRange = new Vector2(3f, 5f);
 
     private float randomNumber;
     private bool isSliding;
+    private Vector2 chaseDir;
 
     void Start()
     {
         nearbyPuddles = new HashSet<Vector2>();
         randomNumber = UnityEngine.Random.Range(-1000000f, 1000000f);
-        maxAttemptsToChangeDir = UnityEngine.Random.Range(intelligenceRange.x, intelligenceRange.y);
+        maxAttemptsToChangeDir = UnityEngine.Random.Range(intelligenceRange.x, intelligenceRange.y+1);
     }
 
     protected override void Update()
@@ -43,11 +46,21 @@ public class AIMovement : Movement
 
     public void ExitState() => state = null;
 
+    public void UpdateChaseDir(Vector2 dir) => chaseDir = dir;
+
     private bool IsAISliding() => isSliding;
 
     private Vector2 GetAIDirection()
     {
-        if (state is CollectFood || isSliding)
+        if (state is ChaseSlime)
+            return chaseDir.normalized;
+
+        // AI scans for and heads towards food pellets
+        else if (state is CollectFood)
+            return scanForNearbyFood();
+
+        // AI wanders around by sliding and avoiding puddles
+        else if (state is Wander && isSliding)
         {
             // AI scans for nearby puddles
             scanForNearbyPuddles();
@@ -71,10 +84,7 @@ public class AIMovement : Movement
         }
 
         // AI randomly wanders around the map, oblivious to puddles
-        else if (state is Wander)
-            return movementDirection();
-
-        return Vector2.zero;
+        return movementDirection();
     }
 
     private void scanForNearbyPuddles()
@@ -83,12 +93,8 @@ public class AIMovement : Movement
         HashSet<Collider2D> closeObstaclePuddles = new HashSet<Collider2D>();
 
         // add puddles within a 3 or 5 unit radius to the slime's track of close puddles
-        int radiusIncrease = 0;
-        while (closePuddles.Length == 0 && (puddleScanRadius + radiusIncrease) <= 5)
-        {
-            closePuddles = Physics2D.OverlapCircleAll(transform.position, puddleScanRadius + radiusIncrease, Constants.PuddleLM);
-            radiusIncrease += 2;
-        }
+        if (closePuddles.Length == 0)
+            closePuddles = Physics2D.OverlapCircleAll(transform.position, puddleScanRadius, Constants.PuddleLM);
         
         foreach (Collider2D puddle in closePuddles)
             closeObstaclePuddles.Add(puddle);
@@ -104,6 +110,27 @@ public class AIMovement : Movement
         foreach (Collider2D puddle in closeObstaclePuddles)
             nearbyPuddles.Add(puddle.transform.position - currPos);
 
+    }
+
+    private Vector2 scanForNearbyFood()
+    {
+        Collider2D[] closeFood = Physics2D.OverlapCircleAll(transform.position, foodScanRadius, Constants.PuddleLM);
+
+        // intialize movement direction in a random direction
+        Vector2 dir = new Vector2(Random.Range(-1f,1f), Random.Range(-1f, 1f)).normalized;
+
+        // check if any food is accessible without running into a puddle. if so head there
+        scanForNearbyPuddles();
+        for (int i = 0; i < Mathf.Min(closeFood.Length, 5); i++)
+        {
+            dir = (closeFood[i].transform.position - transform.position).normalized;
+            if (!IsMovingTowardsPuddle(dir))
+                return dir;
+        }
+
+        // if no food is accessible, bounce towards the last food pellet 
+        isSliding = false;
+        return dir;
     }
 
     private bool IsMovingTowardsPuddle(Vector2 dir)

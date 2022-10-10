@@ -203,7 +203,7 @@ GameObject:
   - component: {fileID: -8249136395352659075}
   - component: {fileID: 5859773049160184611}
   - component: {fileID: 3834746719023230713}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: AI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -306,6 +306,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9af5cc526ebc946caa999204bb0178d7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  pvpCollider: {fileID: 1823214306}
 --- !u!114 &3834746719023230713
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -609,7 +610,8 @@ GameObject:
   - component: {fileID: 4796696838923295155}
   - component: {fileID: 7887450295534419209}
   - component: {fileID: 2915658523284429364}
-  m_Layer: 0
+  - component: {fileID: 504765444513323581}
+  m_Layer: 6
   m_Name: Slime Sprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -739,7 +741,7 @@ PolygonCollider2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8879226092932446417}
-  m_Enabled: 1
+  m_Enabled: 0
   m_Density: 1
   m_Material: {fileID: 0}
   m_IsTrigger: 1
@@ -805,3 +807,29 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 50785e539fb364ba6914b32e6541be86, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!61 &504765444513323581
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8879226092932446417}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0.012288272, y: -1.4669452}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 10, y: 10}
+    newSize: {x: 10, y: 10}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 2.5267134, y: 1.4594369}
+  m_EdgeRadius: 0

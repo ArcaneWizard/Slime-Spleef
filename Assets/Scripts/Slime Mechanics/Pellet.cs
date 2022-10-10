@@ -10,7 +10,7 @@ public class Pellet : MonoBehaviour
     private Vector3 initPos;
 
     private const float epsilon = 0.2f;
-    private Vector3 initialSplashSize = new Vector3(4, 2, 4) * 1.6f;
+    private Vector3 initialSplashSize = new Vector3(4, 3.4f, 4) * 1.6f;
 
     private List<Transform> puddles;
     private int puddleIndex;
@@ -72,6 +72,8 @@ public class Pellet : MonoBehaviour
         newPuddle.localScale = initialSplashSize * pelletSize;
         newPuddle.position = transform.GetChild(0).position - new Vector3(0, 0.2f * pelletSize, 0);
         newPuddle.eulerAngles = new Vector3(0, 0, 0);
+
+        newPuddle.GetComponent<SpriteRenderer>().color = transform.GetChild(0).GetComponent<SpriteRenderer>().color;
         newPuddle.gameObject.SetActive(true);
 
         newPuddle.parent = null;

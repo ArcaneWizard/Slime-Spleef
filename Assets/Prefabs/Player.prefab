@@ -27,7 +27,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 14491431}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: -30}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 6781157317757281226}
@@ -78,7 +78,7 @@ MeshRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 100
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!114 &14491433
 MonoBehaviour:
@@ -184,6 +184,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4a9d610a85c404ab4895c96a60050dc9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  slimeName: 
   spawning: {fileID: 5377867999401406317}
   generalDeath: {fileID: 6781157318686726730}
   userInput: {fileID: 0}
@@ -196,7 +197,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6781157317757281226}
-  m_Layer: 0
+  - component: {fileID: 1654965238}
+  m_Layer: 11
   m_Name: center
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -218,6 +220,22 @@ Transform:
   m_Father: {fileID: 6781157318094344857}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!58 &1654965238
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6781157317757281227}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Radius: 1.1
 --- !u!1 &6781157318094344859
 GameObject:
   m_ObjectHideFlags: 0
@@ -233,6 +251,7 @@ GameObject:
   - component: {fileID: 6781157318094344856}
   - component: {fileID: 6781157318094344861}
   - component: {fileID: 1369184261}
+  - component: {fileID: 355213873}
   m_Layer: 6
   m_Name: Slime
   m_TagString: Untagged
@@ -364,7 +383,7 @@ PolygonCollider2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6781157318094344859}
-  m_Enabled: 1
+  m_Enabled: 0
   m_Density: 1
   m_Material: {fileID: 0}
   m_IsTrigger: 1
@@ -430,6 +449,32 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a5f41d1ec7a25d6429aae8cf3be94392, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!61 &355213873
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6781157318094344859}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0.012288272, y: -1.4669452}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 10, y: 10}
+    newSize: {x: 10, y: 10}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 2.5267134, y: 1.4594369}
+  m_EdgeRadius: 0
 --- !u!1 &6781157318308195959
 GameObject:
   m_ObjectHideFlags: 0
@@ -672,6 +717,7 @@ GameObject:
   - component: {fileID: 6781157318686726741}
   - component: {fileID: 6781157318686726730}
   - component: {fileID: 5377867999401406317}
+  - component: {fileID: 689220241}
   m_Layer: 6
   m_Name: Player
   m_TagString: Untagged
@@ -728,6 +774,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dbe531487a2ee7548801066cd51173db, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  pvpCollider: {fileID: 1654965238}
 --- !u!114 &6781157318686726741
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -763,6 +810,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f565ce12fe1754b56b0bf1f9d848c7d4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &689220241
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6781157318686726743}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8db0a1a1e14c543a6bf62d61a70bbde9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &6781157319679686615

@@ -6,7 +6,7 @@ public class FoodPellet : MonoBehaviour
 {
     private FoodPelletType type;
     private SpriteRenderer renderer;
-    private float superFoodLikelihood = 0.075f;
+    private float superFoodLikelihood = 0.2f;
 
     private static Color32 normal = new Color32(121, 243, 104, 255);
     private static Color32 super = new Color32(148, 136, 250, 255);

@@ -12,7 +12,10 @@ public abstract class Movement : MonoBehaviour
     public bool IsGrounded { get; private set; }
     public bool IsSliding { get; protected set; }
 
-    private const float normalAnimationSpeed = 0.87f;
+    public float Speed { get; private set; }
+    public Vector2 MovementDir { get; protected set; }
+
+    private const float normalAnimationSpeed = 1.1f;
     private const float groundPoundSpeed = 1.4f;
 
     protected const float slidingSpeed = 2.7f;
@@ -24,12 +27,17 @@ public abstract class Movement : MonoBehaviour
         generalDeath = transform.GetComponent<GeneralDeath>();
         rig = transform.GetComponent<Rigidbody2D>();
         sprite = transform.GetChild(0);
+
+        MovementDir = Vector2.zero;
     }
 
     protected virtual void Update()
     {
         if (generalDeath.IsDead)
+        {
+            rig.velocity = Vector2.zero;
             return;
+        }
 
         animator.speed = (IsSliding && !IsGrounded) ? groundPoundSpeed : normalAnimationSpeed;
 
@@ -42,11 +50,9 @@ public abstract class Movement : MonoBehaviour
         // slime is grounded if on the landing frames of its animation
         float animationProgress = animator.GetCurrentAnimatorStateInfo(0).normalizedTime % 1;
         IsGrounded = (0f <= animationProgress && animationProgress <= 0.2f) || animator.GetBool("IsSliding");
-    }
 
-    protected void setVelocity(Vector2 dir)
-    {
-        float speed = animator.GetBool("IsSliding") ? slidingSpeed : bouncingSpeed;
-        rig.velocity = dir.normalized * speed * Mathf.Max((sprite.localScale.x / 0.6f), 1);
+        // set slime velocity
+        Speed = animator.GetBool("IsSliding") ? slidingSpeed : bouncingSpeed;
+        rig.velocity = MovementDir.normalized * Speed * Mathf.Max((sprite.localScale.x / 0.6f), 1);
     }
 }

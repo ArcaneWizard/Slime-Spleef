@@ -17,8 +17,12 @@ public class LeavePuddle : MonoBehaviour
     private List<GameObject> puddles;
     private int puddleIndex = 0;
 
-    private const float puddleDelayWhenSliding = 0.1f;
-    private const float puddleDelayWhenBouncing = 0.25f;
+    private const float delayWhenSliding = 0.1f;
+    private const float delayWhenBouncing = 0.25f;
+
+    private const float lingerDurationAfterSliding = 3f;
+    private const float lingerDurationAfterBouncing = 10f;
+
     private float puddleDelayTimer;
     private bool canSpawnPuddle;
 
@@ -52,7 +56,7 @@ public class LeavePuddle : MonoBehaviour
         if (movement.IsGrounded && canSpawnPuddle)
         {
             canSpawnPuddle = false;
-            puddleDelayTimer = movement.IsSliding ? puddleDelayWhenSliding : puddleDelayWhenBouncing;
+            puddleDelayTimer = movement.IsSliding ? delayWhenSliding : delayWhenBouncing;
             leavePuddle();
         }
 
@@ -66,7 +70,7 @@ public class LeavePuddle : MonoBehaviour
     private void initializePuddleSystem()
     {
         canSpawnPuddle = true;
-        puddleDelayTimer = puddleDelayWhenBouncing;
+        puddleDelayTimer = delayWhenBouncing;
         recentlySpawnedPuddles.Clear();
     }
 
@@ -83,15 +87,33 @@ public class LeavePuddle : MonoBehaviour
         puddleIndex = ++puddleIndex % puddles.Count;
 
         float slimeSize = transform.localScale.x;
-        newPuddle.localScale = new Vector3(1, 0.5f, 1) * slimeSize * 3;
-        newPuddle.position = centerOfSlime.position - new Vector3(0, 0.1f * slimeSize, 0);
+        newPuddle.localScale = new Vector3(1.05f, 0.45f, 1) * slimeSize * 3;
+
+        Vector3 sizeOffsetForPuddle = -new Vector3(0, 0.1f * slimeSize, 0);
+        newPuddle.position = centerOfSlime.position + sizeOffsetForPuddle + speedOffsetForPuddle();
         newPuddle.gameObject.SetActive(true);
 
         IEnumerator setRecentSpawn = InitiateRecentlySpawned(1f, newPuddle.transform);
         StartCoroutine(setRecentSpawn);
 
-        float time = movement.IsSliding ? 3f : 20f;
+        float time = movement.IsSliding ? lingerDurationAfterSliding : lingerDurationAfterBouncing;
         IEnumerator countdown = newPuddle.GetComponent<Puddles>().InitiateDisappearingCountdown(time);
         StartCoroutine(countdown);
+    }
+
+    private Vector3 speedOffsetForPuddle()
+    {
+        if (movement.IsSliding)
+            return Vector3.zero;
+
+        else
+        {
+            float multiplier;
+            multiplier = (movement.MovementDir.normalized.y > 0.5f) ? 0.09f : 0.09f;
+
+            return new Vector3(movement.MovementDir.x, movement.MovementDir.y, 0).normalized
+                * transform.localScale.x * multiplier * movement.Speed;
+        }
+
     }
 }

@@ -4,12 +4,12 @@ using UnityEngine;
 
 public class Size : MonoBehaviour
 {
-    private const float maxSize = 1.5f * 1.5f;
-    private const float minSize = 0.3f * 0.3f;
-    private const float startingSize = 0.4f * 0.4f;
+    protected const float maxSize = 1.5f * 1.5f;
+    protected const float minSize = 0.3f * 0.3f;
+    protected const float startingSize = 0.4f * 0.4f;
 
     public float size { get; private set; }
-    private float fullSize;
+    protected float fullSize;
 
     private Energy energy;
     private Spawning spawning;
@@ -20,7 +20,7 @@ public class Size : MonoBehaviour
         spawning = transform.parent.GetComponent<Spawning>();
     }
 
-    void Start()
+    protected virtual void Start()
     {
         spawning.OnNewSpawn += resetSize;
         resetSize();
@@ -51,6 +51,8 @@ public class Size : MonoBehaviour
             increaseFullSize(0.01f);
     }
 
+    protected void updateSize() => size = fullSize * Mathf.Exp(2f * energy.NormalizedValue - 2f);
+
     private void increaseFullSize(float delta) => fullSize = Mathf.Min(fullSize + delta, maxSize);
     private void decreaseFullSize(float delta) => fullSize = Mathf.Max(fullSize - delta, minSize);
 
@@ -59,6 +61,4 @@ public class Size : MonoBehaviour
         fullSize = startingSize;
         updateSize();
     }
-
-    private void updateSize() => size = fullSize * Mathf.Exp(2f * energy.NormalizedValue - 2f);
 }

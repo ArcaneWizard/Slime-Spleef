@@ -6,18 +6,13 @@ public class PlayerMovement : Movement
 {
     protected override void Update() 
     {
-        if (generalDeath.IsDead)
-        {
-            setVelocity(Vector2.zero);
-            return;
-        }
+        IsSliding = Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.Space);
+        GetUserInput();
 
-        IsSliding = Input.GetKey(KeyCode.LeftShift);
         base.Update();
-        setVelocity();
     }
 
-    private void setVelocity()
+    private void GetUserInput()
     {
         int x = 0;
         int y = 0;
@@ -31,6 +26,6 @@ public class PlayerMovement : Movement
         if (Input.GetKey(KeyCode.D))
             ++x;
 
-        setVelocity(new Vector2(x, y));
+        MovementDir = new Vector2(x, y);
     }
 }

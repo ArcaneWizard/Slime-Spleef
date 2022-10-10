@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 4421409794338395091}
   - component: {fileID: 3898129683916490719}
   - component: {fileID: -8249136395352659075}
+  - component: {fileID: 5859773049160184611}
   m_Layer: 0
   m_Name: AI
   m_TagString: Untagged
@@ -51,7 +52,7 @@ Rigidbody2D:
   m_Mass: 1
   m_LinearDrag: 0
   m_AngularDrag: 0.05
-  m_GravityScale: 1
+  m_GravityScale: 0
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
@@ -103,6 +104,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 09aece12caaf7494bb4d202953e3cf5c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &5859773049160184611
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1119861384014072451}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9af5cc526ebc946caa999204bb0178d7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &1384301585983790902
@@ -377,7 +390,7 @@ GameObject:
   - component: {fileID: 1784514402619337260}
   - component: {fileID: 4796696838923295155}
   - component: {fileID: 7887450295534419209}
-  - component: {fileID: 5830921146510770892}
+  - component: {fileID: 2915658523284429364}
   m_Layer: 0
   m_Name: Slime Sprite
   m_TagString: Untagged
@@ -562,7 +575,7 @@ PolygonCollider2D:
       - {x: 0.049999997, y: -2.31}
       - {x: 0.16, y: -2.3}
       - {x: 0.38, y: -2.29}
---- !u!114 &5830921146510770892
+--- !u!114 &2915658523284429364
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -571,6 +584,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 8879226092932446417}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a5f41d1ec7a25d6429aae8cf3be94392, type: 3}
+  m_Script: {fileID: 11500000, guid: 50785e539fb364ba6914b32e6541be86, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 

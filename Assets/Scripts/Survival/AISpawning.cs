@@ -4,13 +4,17 @@ using UnityEngine;
 
 public class AISpawning : Spawning
 {
-    void Start()
+    private GeneralDeath generalDeath;
+
+    protected override void Awake()
     {
-        
+        base.Awake();
+        generalDeath = transform.GetComponent<GeneralDeath>();
     }
 
-    void Update()
+    void Start()
     {
-        
+        generalDeath.UponDying += StartGame;
+        StartGame();
     }
 }

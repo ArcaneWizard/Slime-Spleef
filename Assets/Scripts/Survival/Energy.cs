@@ -7,8 +7,8 @@ public class Energy : MonoBehaviour
     private const float maxEnergyValue = 110f; // a slime's energy ranges from 0 to the maxEnergyValue. 
     private const float depletionRate = 7f; // the amount of energy the slime loses every second
 
-    private const float energyPerNormalPellet = 5f;
-    private const float energyPerSuperPellet = 25f;
+    private const float energyPerNormalPellet = 8f;
+    private const float energyPerSuperPellet = 24f;
     private const float energyUsedToThrow = 15f;
 
     private Spawning spawning;

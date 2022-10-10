@@ -6,12 +6,20 @@ public class FoodPellet : MonoBehaviour
 {
     private FoodPelletType type;
     private SpriteRenderer renderer;
+    private AudioSource source;
+    private Collider2D col;
+
     private float superFoodLikelihood = 0.2f;
 
     private static Color32 normal = new Color32(121, 243, 104, 255);
     private static Color32 super = new Color32(148, 136, 250, 255);
 
-    void Awake() => renderer = transform.GetComponent<SpriteRenderer>();
+    void Awake()
+    {
+        renderer = transform.GetComponent<SpriteRenderer>();
+        source = transform.GetComponent<AudioSource>();
+        col = transform.GetComponent<Collider2D>();
+    }
 
     public void InitializeType()
     {
@@ -30,9 +38,31 @@ public class FoodPellet : MonoBehaviour
             col.transform.GetComponent<Size>().UpdateSizeAfterEatingFood(type);
             col.transform.parent.GetComponent<Score>().GainScoreFromFood(type);
 
-            FoodPelletsSpawner.AddPelletAwaitingSpawn(gameObject);
-            gameObject.SetActive(false);
+            StartCoroutine(playAudioBeforeDisappearing(col.transform));
         }
+    }
+
+    private IEnumerator playAudioBeforeDisappearing(Transform slime)
+    {
+        col.enabled = false;
+        renderer.enabled = false;
+
+        if (slime.CompareTag("Player"))
+        {
+            source.clip = type == FoodPelletType.Super
+                ? slime.parent.GetComponent<FoodAudioClips>().super
+                : slime.parent.GetComponent<FoodAudioClips>().normal;
+
+            source.Play();
+            yield return new WaitForSeconds(0.25f);
+        }
+        else
+            yield return new WaitForSeconds(0.01f);
+
+        col.enabled = true;
+        renderer.enabled = true;
+
+        FoodPelletsSpawner.RespawnPellet(gameObject);
     }
 }
 

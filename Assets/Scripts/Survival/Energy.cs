@@ -10,7 +10,8 @@ public class Energy : MonoBehaviour
     private const float energyPerNormalPellet = 8f;
     private const float energyPerSuperPellet = 24f;
     private const float energyUsedToThrow = 7.5f;
-    private const float energyDrainedByPuddle = 0.12f;
+    private const float energyDrainedByPuddle = 2.2f;
+    private const float energyGainedFromKill = 18;
 
     private Spawning spawning;
     private GeneralDeath generalDeath;
@@ -53,6 +54,8 @@ public class Energy : MonoBehaviour
         float gain = (type == FoodPelletType.Normal) ? energyPerNormalPellet : energyPerSuperPellet;
         ChangeEnergy(gain);
     }
+
+    public void GainEnergyFromKill() => ChangeEnergy(energyGainedFromKill);
 
     public void LoseEnergyFromThrowing() => ChangeEnergy(-energyUsedToThrow);
 

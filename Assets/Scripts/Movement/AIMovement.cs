@@ -9,7 +9,7 @@ public class AIMovement : Movement
     private const float puddleAversionAngle = 30f;
     private float cosineAversionAngle = Mathf.Cos(puddleAversionAngle);
 
-    private const float foodScanRadius = 5f;
+    private const float foodScanRadius = 6.5f;
 
     private IState state;
     private float maxAttemptsToChangeDir;

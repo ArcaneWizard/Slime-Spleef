@@ -5,44 +5,22 @@ using UnityEngine;
 public class FoodPelletsSpawner : MonoBehaviour
 {
     [SerializeField] private GameObject FoodPellet;
-    private static Stack<GameObject> pelletsPendingSpawn;
 
-    private const int maxPelletCapacity = 2000; // maximum number of pellets possible on the map
-    private const int initialPelletCapcity = 1300; // initial number of pellets spawned on the map
-
-    private Vector2 timeBtwnPelletSpawns = new Vector2(0.5f, 1f);
+    private const int maxPelletCapacity = 1480; // maximum number of pellets possible on the map
 
     void Start()
     {
-        pelletsPendingSpawn = new Stack<GameObject>();
-
         for (int i = 0; i < maxPelletCapacity; i++)
         {
             GameObject pellet = Instantiate(FoodPellet, Spawning.randomMapPosition(), FoodPellet.transform.rotation, transform);
             pellet.GetComponent<FoodPellet>().InitializeType();
-            pellet.SetActive(i < initialPelletCapcity);
-
-            if (i > initialPelletCapcity)
-                pelletsPendingSpawn.Push(pellet);
+            pellet.SetActive(true);
         }
 
-        StartCoroutine(repeatedlySpawnPellets());
     }
 
-    public static void AddPelletAwaitingSpawn(GameObject pellet) => pelletsPendingSpawn.Push(pellet);
-
-    private IEnumerator repeatedlySpawnPellets()
+    public static void RespawnPellet(GameObject pellet)
     {
-        yield return new WaitForSeconds(Random.Range(timeBtwnPelletSpawns.x, timeBtwnPelletSpawns.y));
-        spawnAvailablePellet();
-    }
-
-    private void spawnAvailablePellet()
-    {
-        if (pelletsPendingSpawn.Count == 0)
-            return;
-
-        GameObject pellet = pelletsPendingSpawn.Pop();
         pellet.transform.position = Spawning.randomMapPosition();
         pellet.GetComponent<FoodPellet>().InitializeType();
         pellet.SetActive(true);

@@ -5,9 +5,9 @@ using UnityEngine;
 
 public class Size : MonoBehaviour, IComparable<Size>
 {
-    public const float MaxSize = 1.5f * 1.5f;
-    public const float MinSize = 0.3f * 0.3f;
-    public const float StartingSize = 0.4f * 0.4f;
+    public const float MaxSize = 0.729f;
+    public const float MinSize = 0.3f * 0.3f * 0.3f;
+    public const float StartingSize = 0.36f * 0.36f * 0.36f;
 
     public float size { get; private set; }
     protected float fullSize;
@@ -37,7 +37,7 @@ public class Size : MonoBehaviour, IComparable<Size>
         if (size < MinSize)
             size = MinSize;
 
-        float width = Mathf.Pow(size, 0.5f); 
+        float width = Mathf.Pow(size, 0.33f); 
         transform.localScale = new Vector3(width, width, width);
     }
 
@@ -54,7 +54,7 @@ public class Size : MonoBehaviour, IComparable<Size>
 
     public void UpdateSizeAfterKill(float sizeOfKill) => increaseFullSize(Mathf.Min(0.8f * sizeOfKill, 0.512f));
 
-    protected void updateSize() => size = fullSize * (energy.NormalizedValue * 0.7f + 0.3f);
+    protected void updateSize() => size = fullSize * energy.NormalizedValue;
 
     private void increaseFullSize(float delta) => fullSize = Mathf.Min(fullSize + delta, MaxSize);
     private void decreaseFullSize(float delta) => fullSize = Mathf.Max(fullSize - delta, MinSize);

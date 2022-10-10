@@ -53,19 +53,15 @@ public static class TextGenerator
         string[] funFacts = {
             "Blue super food is worth 5 times as much as normal food.",
             "Holding shift or space to slide lets you move faster.",
-            "Puddles you make while sliding disappear faster than ones you make while jumping.",
-            "Koalas love eucalpytus trees.",
-            "The makers of this game are major nerds.",
-            "Facts are significantly less fun when you're writing them.",
-            "Running into old puddles you made kills you, but newer puddles have a delay.",
-            "The kill delay only exists for puddles made by you, other slime puddles are still deadly.",
-            "Score is based on kills AND food eaten.",
-            "Your size scales with your energy, but your max size increases by eating food.",
-            "Click to throw pellets of yourself and make mini-puddles at their landing point.",
-            "It took several hours to get the slime pellets to move correctly.",
+            "Sliding is slightly faster than bouncing.",
+            "Koalas love eucalpytus trees... said someone we know.",
+            "The makers of this game pulled an all nighter to finish it.",
+            "You can raise your score by eating food or smaller slimes.",
+            "Your size will deplete as you lose energy.",
+            "Click to throw pellets of yourself and make mini-acid puddles.",
+            "It took several hours to get the slime pellets to throw correctly.",
             "There's a secret hidden in the game, can you find it?",
             "The design of the food takes inspiration from the game Duck Life.",
-            "Duck Life 4 was made in Unity."
         };
 
         return "Fun fact: " + pickRandom(funFacts);
@@ -81,12 +77,12 @@ public static class TextGenerator
 
     private static string generateEnergyOutDeathMessage()
     {
-        return "You died from Energy loss. Eat food to stay alive and avoid trudging through slime.";
+        return "You died from energy loss. Eat more food and avoid trudging through slime.";
     }
 
     private static string generatePuddleFallDeathMessage()
     {
-        return "You died by falling into a slimy puddle. They sure do zap your energy!";
+        return "You were eaten by a bigger slime.";
     }
 
     private static string pickRandom(string[] collection)

@@ -10,7 +10,7 @@ public class Pellet : MonoBehaviour
     private Vector3 initPos;
 
     private const float epsilon = 0.2f;
-    private Vector3 initialSplashSize = new Vector3(4, 3.4f, 4) * 1.6f;
+    private Vector3 initialSplashSize = new Vector3(4, 3.4f, 4) * 4f;
 
     private List<Transform> puddles;
     private int puddleIndex;

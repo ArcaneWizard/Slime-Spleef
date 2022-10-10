@@ -14,7 +14,7 @@ public class SlimeSpawner : MonoBehaviour
     private List<GameObject> slimes = new List<GameObject>();
     private List<Score> slimeScores = new List<Score>();
 
-    private const int numOfSlimesOnMap = 100;
+    private const int numOfSlimesOnMap = 130;
 
     void Start()
     {

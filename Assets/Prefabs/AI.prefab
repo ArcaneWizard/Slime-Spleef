@@ -319,6 +319,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8db0a1a1e14c543a6bf62d61a70bbde9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  SlimeScore: 0
 --- !u!1 &1384301585983790902
 GameObject:
   m_ObjectHideFlags: 0

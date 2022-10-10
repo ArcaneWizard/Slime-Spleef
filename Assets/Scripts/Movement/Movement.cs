@@ -25,9 +25,10 @@ public abstract class Movement : MonoBehaviour
     private const float normalAnimationSpeed = 1.1f;
     private const float groundPoundSpeed = 1.4f;
 
-    protected const float slidingSpeed = 2.7f;
-    protected const float bouncingSpeed = 2f;
+    protected const float slidingSpeed = 4.5f;
+    protected const float bouncingSpeed = 3.5f;
     protected float puddleSlowFactor = 1.5f;
+
 
     protected virtual void Awake()
     {
@@ -71,7 +72,7 @@ public abstract class Movement : MonoBehaviour
         // set slime velocity
         Speed = animator.GetBool("IsSliding") ? slidingSpeed : bouncingSpeed;
         Speed *= puddleSlowFactor;
-        rig.velocity = MovementDir.normalized * Speed * Mathf.Max((body.localScale.x / 0.6f), 0.7f);
+        rig.velocity = MovementDir.normalized * Speed * Mathf.Max((body.localScale.x / 0.72f), 0.7f);
 
         updateSpeedAndEnergy();
         stayInMapBounds();

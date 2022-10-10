@@ -7,7 +7,7 @@ public class Score : MonoBehaviour, IComparable<Score>
 {
     public int SlimeScore;
 
-    void Start() => SlimeScore = 0;
+    void Start() => SlimeScore = 30;
 
     public void GainScoreFromFood(FoodPelletType type)
     {

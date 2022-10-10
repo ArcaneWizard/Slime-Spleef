@@ -14,7 +14,7 @@ public abstract class GeneralDeath : MonoBehaviour
     private Size size;
     private Score score;
 
-    void Awake()
+    protected virtual void Awake()
     {
         movement = transform.GetComponent<Movement>();
         energy = transform.GetComponent<Energy>();
@@ -43,14 +43,13 @@ public abstract class GeneralDeath : MonoBehaviour
     {
         IsDead = true;
         UponDying?.Invoke();
-        score.SlimeScore = 0;
     }
 
     private void EntityIsAlive()
     {
         movement.ClearCollidedPuddles();
         IsDead = false;
-        score.SlimeScore = 0;
+        score.SlimeScore = 30;
     }
 
     void OnTriggerEnter2D(Collider2D col)
@@ -63,6 +62,7 @@ public abstract class GeneralDeath : MonoBehaviour
             if (size.size > enemySlimeSize.size)
             {
                 size.UpdateSizeAfterKill(enemySlimeSize.size);
+                energy.GainEnergyFromKill();
                 score.GainScoreFromKill(enemyScore.SlimeScore);
                 col.transform.parent.parent.GetComponent<GeneralDeath>().RegisterDeath();
             }

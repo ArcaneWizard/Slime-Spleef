@@ -59,7 +59,7 @@ public class AI : MonoBehaviour
     {
         if (!hungry())
         {
-            nearbySlimes = Physics2D.OverlapCircleAll(transform.position, 6f, 1 << 6);
+            nearbySlimes = Physics2D.OverlapCircleAll(transform.position, 10f, 1 << 6);
 
             bool smallerSlimeNearby = false;
             foreach (Collider2D slime in nearbySlimes)
@@ -76,7 +76,7 @@ public class AI : MonoBehaviour
         }
 
         if (hungry())
-            hungryButWantFood = UnityEngine.Random.Range(0f, 1f) < 0.2f;
+            hungryButWantFood = UnityEngine.Random.Range(0f, 1f) < 0.3f;
         else
             hungryButWantFood = false;
 

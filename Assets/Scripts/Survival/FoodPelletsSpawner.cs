@@ -18,7 +18,7 @@ public class FoodPelletsSpawner : MonoBehaviour
 
         for (int i = 0; i < maxPelletCapacity; i++)
         {
-            GameObject pellet = Instantiate(FoodPellet, Spawning.randomMapPosition(), Quaternion.identity, transform);
+            GameObject pellet = Instantiate(FoodPellet, Spawning.randomMapPosition(), FoodPellet.transform.rotation, transform);
             pellet.GetComponent<FoodPellet>().InitializeType();
             pellet.SetActive(i < initialPelletCapcity);
 
